@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sudoku Solver</title>
+    <link th:href="@{/sudoku/css/sudoku.css}" rel="stylesheet" />
+    <script th:src="@{/sudoku/js/sudokuUtilities.js}"></script>
+</head>
+
+<body>
+    <div class="sudoku" id="sudoku">
+        <h1>Sudoku Solver</h1>
+        <div th:switch="${invalid}">
+            <p th:case="'1'" class="invalid">This board is impossible to solve!</p>
+            <p th:case="'2'" class="invalid">Invalid board. </p>
+        </div>
+        <form action="#" th:action="@{/sudoku/home}" th:object="${sudokuBoard}" autocomplete="off" method="post">
+            <table class="puzzle-grid">
+                <tbody>
+                    <tr class="top-box-borders side-box-borders">
+                        <td><input id="0" th:field="*{board[0][0]}" maxlength="1"></td>
+                        <td><input id="1" th:field="*{board[0][1]}" maxlength="1"></td>
+                        <td><input id="2" th:field="*{board[0][2]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="3" th:field="*{board[0][3]}" maxlength="1"></td>
+                        <td><input id="4" th:field="*{board[0][4]}" maxlength="1"></td>
+                        <td><input id="5" th:field="*{board[0][5]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="6" th:field="*{board[0][6]}" maxlength="1"></td>
+                        <td><input id="7" th:field="*{board[0][7]}" maxlength="1"></td>
+                        <td><input id="8" th:field="*{board[0][8]}" maxlength="1"></td>
+                    </tr>
+                    <tr class="side-box-borders">
+                        <td><input id="9" th:field="*{board[1][0]}" maxlength="1"></td>
+                        <td><input id="10" th:field="*{board[1][1]}" maxlength="1"></td>
+                        <td><input id="11" th:field="*{board[1][2]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="12" th:field="*{board[1][3]}" maxlength="1"></td>
+                        <td><input id="13" th:field="*{board[1][4]}" maxlength="1"></td>
+                        <td><input id="14" th:field="*{board[1][5]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="15" th:field="*{board[1][6]}" maxlength="1"></td>
+                        <td><input id="16" th:field="*{board[1][7]}" maxlength="1"></td>
+                        <td><input id="17" th:field="*{board[1][8]}" maxlength="1"></td>
+                    </tr>
+                    <tr class="side-box-borders sep-h-borders">
+                        <td><input id="18" th:field="*{board[2][0]}" maxlength="1"></td>
+                        <td><input id="19" th:field="*{board[2][1]}" maxlength="1"></td>
+                        <td><input id="20" th:field="*{board[2][2]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="21" th:field="*{board[2][3]}" maxlength="1"></td>
+                        <td><input id="22" th:field="*{board[2][4]}" maxlength="1"></td>
+                        <td><input id="23" th:field="*{board[2][5]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="24" th:field="*{board[2][6]}" maxlength="1"></td>
+                        <td><input id="25" th:field="*{board[2][7]}" maxlength="1"></td>
+                        <td><input id="26" th:field="*{board[2][8]}" maxlength="1"></td>
+                    </tr>
+                    <tr class="side-box-borders">
+                        <td><input id="27" th:field="*{board[3][0]}" maxlength="1"></td>
+                        <td><input id="28" th:field="*{board[3][1]}" maxlength="1"></td>
+                        <td><input id="29" th:field="*{board[3][2]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="30" th:field="*{board[3][3]}" maxlength="1"></td>
+                        <td><input id="31" th:field="*{board[3][4]}" maxlength="1"></td>
+                        <td><input id="32" th:field="*{board[3][5]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="33" th:field="*{board[3][6]}" maxlength="1"></td>
+                        <td><input id="34" th:field="*{board[3][7]}" maxlength="1"></td>
+                        <td><input id="35" th:field="*{board[3][8]}" maxlength="1"></td>
+                    </tr>
+                    <tr class="side-box-borders">
+                        <td><input id="36" th:field="*{board[4][0]}" maxlength="1"></td>
+                        <td><input id="37" th:field="*{board[4][1]}" maxlength="1"></td>
+                        <td><input id="38" th:field="*{board[4][2]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="39" th:field="*{board[4][3]}" maxlength="1"></td>
+                        <td><input id="40" th:field="*{board[4][4]}" maxlength="1"></td>
+                        <td><input id="41" th:field="*{board[4][5]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="42" th:field="*{board[4][6]}" maxlength="1"></td>
+                        <td><input id="43" th:field="*{board[4][7]}" maxlength="1"></td>
+                        <td><input id="44" th:field="*{board[4][8]}" maxlength="1"></td>
+                    </tr>
+                    <tr class="side-box-borders sep-h-borders">
+                        <td><input id="45" th:field="*{board[5][0]}" maxlength="1"></td>
+                        <td><input id="46" th:field="*{board[5][1]}" maxlength="1"></td>
+                        <td><input id="47" th:field="*{board[5][2]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="48" th:field="*{board[5][3]}" maxlength="1"></td>
+                        <td><input id="49" th:field="*{board[5][4]}" maxlength="1"></td>
+                        <td><input id="50" th:field="*{board[5][5]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="51" th:field="*{board[5][6]}" maxlength="1"></td>
+                        <td><input id="52" th:field="*{board[5][7]}" maxlength="1"></td>
+                        <td><input id="53" th:field="*{board[5][8]}" maxlength="1"></td>
+                    </tr>
+                    <tr class="side-box-borders">
+                        <td><input id="54" th:field="*{board[6][0]}" maxlength="1"></td>
+                        <td><input id="55" th:field="*{board[6][1]}" maxlength="1"></td>
+                        <td><input id="56" th:field="*{board[6][2]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="57" th:field="*{board[6][3]}" maxlength="1"></td>
+                        <td><input id="58" th:field="*{board[6][4]}" maxlength="1"></td>
+                        <td><input id="59" th:field="*{board[6][5]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="60" th:field="*{board[6][6]}" maxlength="1"></td>
+                        <td><input id="61" th:field="*{board[6][7]}" maxlength="1"></td>
+                        <td><input id="62" th:field="*{board[6][8]}" maxlength="1"></td>
+                    </tr>
+                    <tr class="side-box-borders">
+                        <td><input id="63" th:field="*{board[7][0]}" maxlength="1"></td>
+                        <td><input id="64" th:field="*{board[7][1]}" maxlength="1"></td>
+                        <td><input id="65" th:field="*{board[7][2]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="66" th:field="*{board[7][3]}" maxlength="1"></td>
+                        <td><input id="67" th:field="*{board[7][4]}" maxlength="1"></td>
+                        <td><input id="68" th:field="*{board[7][5]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="69" th:field="*{board[7][6]}" maxlength="1"></td>
+                        <td><input id="70" th:field="*{board[7][7]}" maxlength="1"></td>
+                        <td><input id="71" th:field="*{board[7][8]}" maxlength="1"></td>
+                    </tr>
+                    <tr class="bottom-box-borders side-box-borders">
+                        <td><input id="72" th:field="*{board[8][0]}" maxlength="1"></td>
+                        <td><input id="73" th:field="*{board[8][1]}" maxlength="1"></td>
+                        <td><input id="74" th:field="*{board[8][2]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="75" th:field="*{board[8][3]}" maxlength="1"></td>
+                        <td><input id="76" th:field="*{board[8][4]}" maxlength="1"></td>
+                        <td><input id="77" th:field="*{board[8][5]}" maxlength="1" class="sep-v-borders" ></td>
+                        <td><input id="78" th:field="*{board[8][6]}" maxlength="1"></td>
+                        <td><input id="79" th:field="*{board[8][7]}" maxlength="1"></td>
+                        <td><input id="80" th:field="*{board[8][8]}" maxlength="1"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="buttons">
+                <button class="btn btn-primary" onclick="validate()" type="submit">Solve!</button>
+                <button class="btn btn-primary" onclick="clearBoard();return false;">Reset</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
