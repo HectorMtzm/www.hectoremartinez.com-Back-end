@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/style.css}">
+    <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
+    <title th:text="${staff} ? 'Instructor Form' : 'Student Form'"></title>
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
+            <ul>
+                <li><a th:classappend="${!staff} ? 'current'" th:href="@{/students/list}">Students</a></li>
+                <li><a th:classappend="${staff} ? 'current'" th:href="@{/instructors/list}">Instructors</a></li>
+                <li><a th:href="@{/courses/list}">Courses</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="container">
+        <h3 th:text="${staff} ? 'Instructor Directory' : 'Student Directory'"></h3>
+
+        <p>Save Employee</p>
+
+        <form action="#" th:action="${staff} ? @{/instructors/save} : @{/students/save}" th:object="${individual}"
+              method="POST">
+
+            <!-- Add hidden form field to handle update -->
+            <input type="hidden" th:field="*{id}" />
+            <div>
+                <input type="text" th:field="*{firstName}" placeholder="First name">
+
+                <!-- Add error message (if present) -->
+                <!--                <span th:if="${#fields.hasErrors('firstName')}"-->
+                <!--                  th:errors="*{firstName}"></span>-->
+            </div>
+            <div>
+                <input type="text" th:field="*{lastName}" placeholder="Last name">
+
+                <!-- Add error message (if present) -->
+                <!--            <span th:if="${#fields.hasErrors('lastName')}"-->
+                <!--                  th:errors="*{lastName}"></span>-->
+            </div>
+            <div>
+                <input type="text" th:field="*{email}" placeholder="Email">
+
+                <!-- Add error message (if present) -->
+                <!--            <span th:if="${#fields.hasErrors('email')}"-->
+                <!--                  th:errors="*{email}"></span>-->
+            </div>
+
+            <div id="student" th:if="${!staff}">
+                <input type="hidden" th:field="*{details.id}" />
+                <div>
+                    <input type="text" th:field="*{details.phoneNumber}" placeholder="Phone Number">
+
+                    <!-- Add error message (if present) -->
+                    <!--                <span th:if="${#fields.hasErrors('phoneNumber')}"-->
+                    <!--                      th:errors="*{studentDetail.phoneNumber}"></span>-->
+                </div>
+                <div>
+                    <input type="text" th:field="*{details.major}" placeholder="Major">
+
+                    <!-- Add error message (if present) -->
+                    <!--                <span th:if="${#fields.hasErrors('major')}"-->
+                    <!--                      th:errors="*{studentDetail.major}"></span>-->
+                </div>
+                <div>
+                    <input type="text" th:field="*{details.profilePic}" placeholder="Profile Picture URL">
+
+                    <!-- Add error message (if present) -->
+                    <!--                <span th:if="${#fields.hasErrors('profilePic')}"-->
+                    <!--                      th:errors="*{studentDetail.profilePic}"></span>-->
+                </div>
+                <div>
+                    <input type="text" th:field="*{details.dateOfBirth}" placeholder="Date of Birth">
+
+                    <!-- Add error message (if present) -->
+                    <!--                <span th:if="${#fields.hasErrors('dateOfBirth')}"-->
+                    <!--                      th:errors="*{studentDetail.dateOfBirth}"></span>-->
+                </div>
+                <div>
+                    <input type="text" th:field="*{details.state}" placeholder="State">
+
+                    <!-- Add error message (if present) -->
+                    <!--                <span th:if="${#fields.hasErrors('state')}"-->
+                    <!--                      th:errors="*{studentDetail.state}"></span>-->
+                </div>
+                <div>
+                    <input type="text" th:field="*{details.city}" placeholder="City">
+
+                    <!-- Add error message (if present) -->
+                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
+                    <!--                      th:errors="*{studentDetail.city}"></span>-->
+                </div>
+                <div>
+                    <input type="text" th:field="*{details.address}" placeholder="address">
+
+                    <!-- Add error message (if present) -->
+                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
+                    <!--                      th:errors="*{studentDetail.city}"></span>-->
+                </div>
+            </div>
+
+            <div id="staff" th:if="${staff}">
+                <input type="hidden" th:field="*{details.id}" />
+                <div>
+                    <input type="text" th:field="*{details.office}" placeholder="Office">
+
+                    <!-- Add error message (if present) -->
+                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
+                    <!--                      th:errors="*{studentDetail.city}"></span>-->
+                </div>
+                <div>
+                    <input type="text" th:field="*{details.phoneNumber}" placeholder="Phone number">
+
+                    <!-- Add error message (if present) -->
+                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
+                    <!--                      th:errors="*{studentDetail.city}"></span>-->
+                </div>
+                <div>
+                    <input type="text" th:field="*{details.youtubeChannel}" placeholder="Youtube Channel">
+
+                    <!-- Add error message (if present) -->
+                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
+                    <!--                      th:errors="*{studentDetail.city}"></span>-->
+                </div>
+                <div>
+                    <input type="text" th:field="*{details.profilePic}" placeholder="Profile Picture URL">
+
+                    <!-- Add error message (if present) -->
+                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
+                    <!--                      th:errors="*{studentDetail.city}"></span>-->
+                </div>
+            </div>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</main>
+</body>
+
+</html>

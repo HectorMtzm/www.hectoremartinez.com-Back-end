@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/style.css}">
+    <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
+    <title th:text="${individual.firstName + ' ' + individual.lastName}"></title>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
+                <ul>
+                    <li><a th:classappend="${!staff} ? 'current'" th:href="@{/students/list}">Students</a></li>
+                    <li><a th:classappend="${staff} ? 'current'" th:href="@{/instructors/list}">Instructors</a></li>
+                    <li><a th:href="@{/courses/list}">Courses</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <a class="btn btn-primary" th:href="@{/students/list}"><i class="fas fa-chevron-left"></i> <span th:text="${staff} ? 'Instructors Table' : 'Students Table'"/></a>
+            <div class="profile">
+                <div class="userInfo">
+                    <div class="basicInfo">
+                        <div class="square-image-container">
+                            <img class="profile-pic" th:src="${individual.details.profilePic}" alt="Profile Picture">
+                        </div>
+                        <h2 th:text="${individual.firstName + ' ' + individual.lastName}"></h2>
+                        <p id="major" th:if="${!staff}" th:text="${individual.details.major}"></p>
+                    </div>
+
+                    <h3>Contact information</h3>
+
+                    <div class="contactInfo">
+                        <p class="label">Email:</p>
+                        <p th:text="${individual.email}"></p>
+                        <p class="label">Phone Number:</p>
+                        <p th:text="${individual.details.phoneNumber}"></p>
+                        <div th:if="${!staff}">
+                            <p class="label">Address:</p>
+                            <p th:text="${individual.details.address}"></p>
+                            <p th:text="${individual.details.city + ', ' + individual.details.state}"></p>
+                        </div>
+                        <div th:if="${staff}">
+                            <p class="label">Office Location:</p>
+                            <p th:text="${individual.details.office}"></p>
+                            <p class="label">Youtube Channel:</p>
+                            <p th:text="${individual.details.youtubeChannel}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="courses">
+                    <h2>
+                        Courses
+                        <span th:if="${staff}">Teaching</span>
+                        <span th:unless="${staff}">Taking</span>
+                    </h2>
+                    <table>
+
+                        <thead>
+                            <th>ID</th>
+                            <th>Class Number</th>
+                            <th>Title</th>
+                            <div th:if="${!staff}">
+                            <th>Professor</th>
+                            </div>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+
+                            <tr th:each="tempCourse : ${individual.courses}">
+                                <td><a th:text="${tempCourse.id}" th:href="@{/courses/{id}(id=${tempCourse.id})}"></a>
+                                </td>
+                                <td th:text="${tempCourse.code}"></td>
+                                <td th:text="${tempCourse.title}"></td>
+                                <div th:if="${!staff}">
+                                    <td th:text="${tempCourse.getInstructor()}"></td>
+                                </div>
+                                <td th:if="${!staff}">
+                                    <a th:href="@{/students/dropCourse(courseId=${tempCourse.id}, studentId=${individual.id})}"
+                                        onclick="if(!(confirm('Are you sure you want to drop this class?'))) return false">Drop</a>
+                                </td>
+                                <td th:unless="${!staff}">
+                                    <a th:href="@{/instructors/removeCourse(courseId=${tempCourse.id}, instructorId=${individual.id})}"
+                                       onclick="if(!(confirm('Are you sure you want to remove this class?'))) return false">Remove</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+
+    </footer>
+
+</body>
+
+</html>

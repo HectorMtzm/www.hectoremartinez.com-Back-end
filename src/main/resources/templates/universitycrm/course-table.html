@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/style.css}">
+    <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
+    <title>Thymeleaf Demo</title>
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
+            <ul>
+                <li><a th:href="@{/students/list}">Students</a></li>
+                <li><a th:href="@{/instructors/list}">Instructors</a></li>
+                <li><a class="current" th:href="@{/courses/list}">Courses</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <div class="small-container">
+
+        <a class="btn btn-primary" th:href="@{/courses/addForm}">Add Course</a>
+
+        <table>
+            <thead>
+                <th>ID</th>
+                <th>Number</th>
+                <th>Title</th>
+                <th>Instructor</th>
+                <th>Action</th>
+            </thead>
+
+            <tbody>
+            <tr th:each="tempCourse : ${courses}">
+                <td><a th:text="${tempCourse.id}" th:href="@{/courses/{id}(id=${tempCourse.id})}"></a> </td>
+                <td th:text="${tempCourse.code}"></td>
+                <td th:text="${tempCourse.title}"></td>
+                <td th:if="${tempCourse.instructor} != null">
+                    <span th:text="${tempCourse.instructor.firstName + ' ' + tempCourse.instructor.lastName}"></span>
+                </td>
+                <td th:unless="${tempCourse.instructor} != null">
+                    <span></span>
+                </td>
+                <td class="actions">
+                    <a th:href="@{/courses/updateForm(courseId=${tempCourse.id})}">Update</a>
+                    |
+                    <a th:href="@{/courses/delete(courseId=${tempCourse.id})}"
+                       onclick="if(!(confirm('Are you sure you want to delete this course?'))) return false">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

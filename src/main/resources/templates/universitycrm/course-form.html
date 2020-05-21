@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/style.css}">
+    <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
+    <title>Course Form</title>
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
+            <ul>
+                <li><a th:href="@{/students/list}">Students</a></li>
+                <li><a th:href="@{/instructors/list}">Instructors</a></li>
+                <li><a class="current" th:href="@{/courses/list}">Courses</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="container">
+        <h3>Course Directory</h3>
+
+        <p>Save Course</p>
+
+        <form action="#" th:action="@{/courses/save}" th:object="${course}"
+              method="POST" id="addForm" name="addForm">
+
+            <!-- Add hidden form field to handle update -->
+            <input type="hidden" th:field="*{id}" />
+            <div>
+                <input type="text" th:field="*{code}" placeholder="Course Number">
+
+                <!-- Add error message (if present) -->
+                <!--                <span th:if="${#fields.hasErrors('firstName')}"-->
+                <!--                  th:errors="*{firstName}"></span>-->
+            </div>
+            <div>
+                <input type="text" th:field="*{title}" placeholder="Title">
+
+                <!-- Add error message (if present) -->
+                <!--            <span th:if="${#fields.hasErrors('lastName')}"-->
+                <!--                  th:errors="*{lastName}"></span>-->
+            </div>
+            <div>
+                <select name="instructorId" form="addForm">
+                    <option value="0" th:text="--"></option>
+                    <option th:each="tempInstructor : ${instructorList}"
+                            th:text="${tempInstructor.id} + '. ' + ${tempInstructor.firstName} + ' ' + ${tempInstructor.lastName}"
+                            th:value="${tempInstructor.id}"
+                            th:selected="${tempInstructor.id == instructorId}"></option>
+                </select>
+            </div>
+
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</main>
+</body>
+
+</html>
