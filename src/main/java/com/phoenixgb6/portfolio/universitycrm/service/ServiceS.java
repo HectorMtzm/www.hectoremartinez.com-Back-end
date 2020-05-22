@@ -7,9 +7,13 @@ public interface ServiceS<T>{
 
     public List<T> findAll();
 
+    public List<T> findAll(int pageNumber, int pageSize);
+
     public T findById(int id);
 
     public void save (T t);
 
     public void deleteById(int id);
+
+    public long count();
 }

@@ -22,9 +22,14 @@ public class InstructorServiceImpl implements ServiceS<Instructor> {
 
 
     @Override
-    @Transactional
     public List<Instructor> findAll() {
         return instructorDAO.findAll();
+    }
+
+    @Override
+    @Transactional
+    public List<Instructor> findAll(int pageNumber, int pageSize) {
+        return instructorDAO.findAll(pageNumber, pageSize);
     }
 
     @Override
@@ -55,5 +60,11 @@ public class InstructorServiceImpl implements ServiceS<Instructor> {
     @Transactional
     public void deleteById(int id) {
         instructorDAO.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public long count(){
+        return instructorDAO.count();
     }
 }

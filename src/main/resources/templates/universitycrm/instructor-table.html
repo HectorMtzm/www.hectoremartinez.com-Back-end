@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,47 +10,81 @@
 </head>
 
 <body>
-<header>
-    <nav class="navbar">
-        <div class="container">
-            <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
-            <ul>
-                <li><a th:href="@{/students/list}">Students</a></li>
-                <li><a class="current" th:href="@{/instructors/list}">Instructors</a></li>
-                <li><a th:href="@{/courses/list}">Courses</a></li>
-            </ul>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
+                <ul>
+                    <li><a th:href="@{/students/list}">Students</a></li>
+                    <li><a class="current" th:href="@{/instructors/list}">Instructors</a></li>
+                    <li><a th:href="@{/courses/list}">Courses</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="small-container">
+        <a class="btn btn-primary" th:href="@{/instructors/addForm}">Add Instructor</a>
+
+        <table>
+
+            <thead>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </thead>
+            <tbody>
+
+                <tr th:each="tempInstructor : ${instructors}">
+                    <td><a th:text="${tempInstructor.id}" th:href="@{/instructors/{id}(id=${tempInstructor.id})}"></a>
+                    </td>
+                    <td th:text="${tempInstructor.firstName}"></td>
+                    <td th:text="${tempInstructor.lastName}"></td>
+                    <td th:text="${tempInstructor.email}"></td>
+                    <td class="actions">
+                        <a th:href="@{/instructors/updateForm(individualId=${tempInstructor.id})}">Update</a>
+                        |
+                        <a th:href="@{/instructors/delete(individualId=${tempInstructor.id})}"
+                            onclick="if(!(confirm('Are you sure you want to delete this instructor?'))) return false">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!--  pagination  -->
+        <div class="pagination">
+            <!--     Handle "First" and "Prev" links -->
+            <div th:if="${currentPage != 1}" th:remove="tag">
+                <a th:href="@{/instructors/list(pageNumber=${1})}" value="1">First</a>
+                <a th:href="@{/instructors/list(pageNumber=${currentPage}-1)}" value="1">Previous</a>
+            </div>
+            <div th:unless="${currentPage != 1}" th:remove="tag">
+                <a class="disabled">First</a>
+                <a class="disabled">Previous</a>
+            </div>
+            <!-- Handle "..." if there are more pages -->
+            <span th:if="${currentPage > 5 and (totalPages > 10)}">...</span>
+            <!--   Handle Page number links -->
+            <div th:each="i: ${#numbers.sequence(1, totalCount, pageSize)}" th:remove="tag">
+                <span th:if="${i > (currentPage - 5) and i <= (currentPage + 5) or (currentPage <= 5 and i <= 10) or totalPages <= 10}" th:remove="tag">
+                    <a th:if="${i == currentPage}" th:href="@{/instructors/list(pageNumber=${i})}" th:classappend="selected-page" th:value="${i}" th:text="${i}"></a>
+                    <a th:unless="${i == currentPage}" th:href="@{/instructors/list(pageNumber=${i})}" th:value="${i}" th:text="${i}"></a>
+                </span>
+            </div>
+            <!-- Handle "..." if there are more pages -->
+            <span th:if="${currentPage < (totalPages - 5) and (totalPages > 10)}">...</span>
+            <!-- Handle "Next" and "Prev" links -->
+            <div th:if="${currentPage != totalPages}" th:remove="tag">
+                <a th:href="@{/instructors/list(pageNumber=${currentPage}+1)}">Next</a>
+                <a th:href="@{/instructors/list(pageNumber=${totalCount})}">Last</a>
+            </div>
+            <div th:unless="${currentPage != totalPages}" th:remove="tag">
+                <a th:classappend="disabled">Next</a>
+                <a th:classappend="disabled">Last</a>
+            </div>
         </div>
-    </nav>
-</header>
-
-<div class="small-container">
-<a class="btn btn-primary" th:href="@{/instructors/addForm}">Add Instructor</a>
-
-<table>
-
-    <thead>
-    <th>ID</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Email</th>
-    <th>Action</th>
-    </thead>
-    <tbody>
-
-    <tr th:each="tempInstructor : ${instructors}">
-        <td><a th:text="${tempInstructor.id}" th:href="@{/instructors/{id}(id=${tempInstructor.id})}"></a> </td>
-        <td th:text="${tempInstructor.firstName}"></td>
-        <td th:text="${tempInstructor.lastName}"></td>
-        <td th:text="${tempInstructor.email}"></td>
-        <td class="actions">
-            <a th:href="@{/instructors/updateForm(individualId=${tempInstructor.id})}">Update</a>
-             |
-            <a th:href="@{/instructors/delete(individualId=${tempInstructor.id})}"
-               onclick="if(!(confirm('Are you sure you want to delete this instructor?'))) return false">Delete</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-</div>
+    </div>
 </body>
 </html>
