@@ -21,9 +21,14 @@ public class ReviewServiceImpl implements ServiceS<Review>{
 
 
     @Override
-    @Transactional
     public List<Review> findAll() {
         return reviewDAO.findAll();
+    }
+
+    @Override
+    @Transactional
+    public List<Review> findAll(int pageNumber, int pageSize) {
+        return reviewDAO.findAll(pageNumber, pageSize);
     }
 
     @Override
@@ -54,5 +59,11 @@ public class ReviewServiceImpl implements ServiceS<Review>{
     @Transactional
     public void deleteById(int id) {
         reviewDAO.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public long count(){
+        return reviewDAO.count();
     }
 }

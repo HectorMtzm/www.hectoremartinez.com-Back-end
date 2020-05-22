@@ -24,10 +24,22 @@ public class StudentController {
     }
 
     @GetMapping("/list")
-    public String studentsList(Model model){
+    public String studentsList(Model model,
+                               @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+                               @RequestParam(name = "pageSize", required = false, defaultValue = "15") int pageSize){
 
-        List<Student> studentsList = studentService.findAll();
+        long count = studentService.count();
+        int totalPages = (int) Math.floor(count / pageSize);
+        if ((count % pageSize) > 0) {
+            totalPages++;
+        }
 
+        List<Student> studentsList = studentService.findAll(pageNumber, pageSize);
+
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalCount", count);
+        model.addAttribute("currentPage", pageNumber);
         model.addAttribute("students", studentsList);
 
         return "universitycrm/student-table";

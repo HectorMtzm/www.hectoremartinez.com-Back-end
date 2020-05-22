@@ -56,6 +56,40 @@
             </tr>
             </tbody>
         </table>
+
+<!-- pagination -->
+        <div class="pagination">
+<!-- Handle "First" and "Prev" links -->
+            <div th:if="${currentPage != 1}" th:remove="tag">
+                <a th:href="@{/courses/list(pageNumber=${1})}" value="1">First</a>
+                <a th:href="@{/courses/list(pageNumber=${currentPage}-1)}" value="1">Previous</a>
+            </div>
+            <div th:unless="${currentPage != 1}" th:remove="tag">
+                <a class="disabled">First</a>
+                <a class="disabled">Previous</a>
+            </div>
+<!-- Handle "..." if there are more pages -->
+            <span th:if="${currentPage > 5 and (totalPages > 10)}">...</span>
+<!-- Handle Page number links -->
+            <div th:each="i: ${#numbers.sequence(1, totalCount, pageSize)}" th:remove="tag">
+                <span th:if="${i > (currentPage - 5) and i <= (currentPage + 5) or (currentPage <= 5 and i <= 10) or totalPages <= 10}" th:remove="tag">
+                    <a th:if="${i == currentPage}" th:href="@{/courses/list(pageNumber=${i})}" th:classappend="selected-page" th:value="${i}" th:text="${i}"></a>
+                    <a th:unless="${i == currentPage}" th:href="@{/courses/list(pageNumber=${i})}" th:value="${i}" th:text="${i}"></a>
+
+                </span>
+            </div>
+<!-- Handle "..." if there are more pages -->
+            <span th:if="${currentPage < (totalPages - 5) and (totalPages > 10)}">...</span>
+<!-- Handle "Next" and "Prev" links -->
+            <div th:if="${currentPage != totalPages}" th:remove="tag">
+                <a th:href="@{/courses/list(pageNumber=${currentPage}+1)}">Next</a>
+                <a th:href="@{/courses/list(pageNumber=${totalCount})}">Last</a>
+            </div>
+            <div th:unless="${currentPage != totalPages}" th:remove="tag">
+                <a th:classappend="disabled">Next</a>
+                <a th:classappend="disabled">Last</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>

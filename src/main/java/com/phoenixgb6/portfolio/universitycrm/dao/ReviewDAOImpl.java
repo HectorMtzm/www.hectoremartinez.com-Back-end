@@ -1,6 +1,7 @@
 package com.phoenixgb6.portfolio.universitycrm.dao;
 
 import com.phoenixgb6.portfolio.universitycrm.entity.Course;
+import com.phoenixgb6.portfolio.universitycrm.entity.Instructor;
 import com.phoenixgb6.portfolio.universitycrm.entity.Review;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -24,8 +25,7 @@ public class ReviewDAOImpl implements DAO<Review>{
     }
 
     @Override
-    public List findAll() {
-
+    public List<Review> findAll() {
         //get current session
         Session session = entityManager.unwrap(Session.class);
 
@@ -33,6 +33,19 @@ public class ReviewDAOImpl implements DAO<Review>{
         Query<Review> query = session.createQuery("from Review", Review.class);
 
         //execute query and get the result list
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Review> findAll(int pageNumber, int pageSize) {
+
+        //get current session
+        Session session = entityManager.unwrap(Session.class);
+
+        Query query = session.createQuery("from Review s order by  s.id", Review.class);
+        query.setFirstResult((pageNumber-1) * pageSize);
+        query.setMaxResults(pageSize);
+
         List<Review> reviewList = query.getResultList();
 
         return reviewList;
@@ -59,5 +72,15 @@ public class ReviewDAOImpl implements DAO<Review>{
         Session session = entityManager.unwrap(Session.class);
 
         session.delete(findById(id));
+    }
+
+    @Override
+    public long count() {
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Long> query = session.createQuery("select count(id) from Review", Long.class);
+        long count = query.getSingleResult().longValue();
+
+        return count;
     }
 }
