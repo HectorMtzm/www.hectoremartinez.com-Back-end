@@ -25,22 +25,30 @@ public class StudentController {
 
     @GetMapping("/list")
     public String studentsList(Model model,
-                               @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
-                               @RequestParam(name = "pageSize", required = false, defaultValue = "15") int pageSize){
+                               @RequestParam(name = "page", required = false, defaultValue = "1") int pageNumber,
+                               @RequestParam(name = "paSi", required = false, defaultValue = "15") int pageSize,
+                               @RequestParam(name = "order", required = false, defaultValue = "1") int order,
+                               @RequestParam(name = "search", required = false, defaultValue = "") String search){
 
-        long count = studentService.count();
+        long count;
+
+        if(search.equals("")){ count = studentService.count(); }
+        else{ count = studentService.count(search); }
+
         int totalPages = (int) Math.floor(count / pageSize);
         if ((count % pageSize) > 0) {
             totalPages++;
         }
 
-        List<Student> studentsList = studentService.findAll(pageNumber, pageSize);
+        List<Student> studentsList = studentService.findAll(pageNumber, pageSize, order, search);
 
-        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("paSi", pageSize);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("totalCount", count);
-        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("page", pageNumber); //current page
         model.addAttribute("students", studentsList);
+        model.addAttribute("order", order);
+        model.addAttribute("search", search);
 
         return "universitycrm/student-table";
     }

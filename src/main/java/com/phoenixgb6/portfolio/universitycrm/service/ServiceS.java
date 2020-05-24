@@ -1,13 +1,12 @@
 package com.phoenixgb6.portfolio.universitycrm.service;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ServiceS<T>{
 
     public List<T> findAll();
 
-    public List<T> findAll(int pageNumber, int pageSize);
+    public List<T> findAll(int pageNumber, int pageSize, int orderBy, String name);
 
     public T findById(int id);
 
@@ -16,4 +15,6 @@ public interface ServiceS<T>{
     public void deleteById(int id);
 
     public long count();
+
+    public long count(String str);
 }
