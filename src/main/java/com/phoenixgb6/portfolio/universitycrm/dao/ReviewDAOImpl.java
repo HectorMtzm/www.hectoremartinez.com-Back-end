@@ -1,7 +1,5 @@
 package com.phoenixgb6.portfolio.universitycrm.dao;
 
-import com.phoenixgb6.portfolio.universitycrm.entity.Course;
-import com.phoenixgb6.portfolio.universitycrm.entity.Instructor;
 import com.phoenixgb6.portfolio.universitycrm.entity.Review;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -37,12 +35,24 @@ public class ReviewDAOImpl implements DAO<Review>{
     }
 
     @Override
-    public List<Review> findAll(int pageNumber, int pageSize) {
+    public List<Review> findAll(int pageNumber, int pageSize, int orderBy, String name) {
 
         //get current session
         Session session = entityManager.unwrap(Session.class);
 
-        Query query = session.createQuery("from Review s order by  s.id", Review.class);
+        String queryString = "";
+
+        if(orderBy == 1){
+            queryString = "from Review s order by  s.id";
+        }
+        else if(orderBy == 2){
+            queryString = "from Review s order by  s.firstName";
+        }
+        else if(orderBy == 3){
+            queryString = "from Review s order by  s.lastName";
+        }
+
+        Query query = session.createQuery(queryString, Review.class);
         query.setFirstResult((pageNumber-1) * pageSize);
         query.setMaxResults(pageSize);
 
@@ -82,5 +92,10 @@ public class ReviewDAOImpl implements DAO<Review>{
         long count = query.getSingleResult().longValue();
 
         return count;
+    }
+
+    @Override
+    public long count(String code) {
+        return 0;
     }
 }

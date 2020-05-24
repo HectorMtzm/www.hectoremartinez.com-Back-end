@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface DAO<T> {
     public List<T> findAll();
 
-    public List<T> findAll(int pageNumber, int pageSize);
+    public List<T> findAll(int pageNumber, int pageSize, int orderBy, String name);
 
     public Optional<T> findById(int id);
 
@@ -15,4 +15,6 @@ public interface DAO<T> {
     public void deleteById(int id);
 
     public long count();
+
+    public long count(String str);
 }

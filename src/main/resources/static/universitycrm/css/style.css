@@ -89,6 +89,15 @@ ul{
     background-color: var(--primary-color-dark);
 }
 
+.select-container{
+    display: flex;
+    align-items: center;
+}
+
+select, input{
+    font-size: 1rem;
+}
+
 
 /*---------------------Profile---------------------*/
 
@@ -195,11 +204,20 @@ ul{
 
 /*---------------------Tables---------------------*/
 
+.small-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.small-container .table-options{
+    display: flex;
+    justify-content: space-between;
+}
+
 table {
-    /*border-radius: 10px;*/
-    /*background-color: #fff;*/
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 10px;
 }
 
 table td{
@@ -208,4 +226,33 @@ table td{
     padding-top: 10px;
 }
 
+/*---------------------Pagination---------------------*/
 
+.pagination a{
+    padding: 3px 8px;
+    border: 1px solid #cecece;
+    color: black;
+}
+
+.pagination a:hover:not(.selected-page) {
+    background-color: #ddd;
+}
+
+
+.pagination .selected-page{
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+}
+
+.pagination .disabled{
+    color: #797979;
+    background-color: #fafafa;
+    border: 1px solid #cecece;
+}
+
+.pagination{
+    display: flex;
+    justify-content: space-between;
+}

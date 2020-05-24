@@ -27,8 +27,8 @@ public class ReviewServiceImpl implements ServiceS<Review>{
 
     @Override
     @Transactional
-    public List<Review> findAll(int pageNumber, int pageSize) {
-        return reviewDAO.findAll(pageNumber, pageSize);
+    public List<Review> findAll(int pageNumber, int pageSize, int orderBy, String name) {
+        return reviewDAO.findAll(pageNumber, pageSize, orderBy,name);
     }
 
     @Override
@@ -65,5 +65,10 @@ public class ReviewServiceImpl implements ServiceS<Review>{
     @Transactional
     public long count(){
         return reviewDAO.count();
+    }
+
+    @Override
+    public long count(String str) {
+        return 0;
     }
 }

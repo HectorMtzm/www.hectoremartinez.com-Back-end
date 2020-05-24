@@ -28,7 +28,9 @@ public class CourseController {
     @GetMapping("/list")
     public String coursesList(Model model,
                               @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
-                              @RequestParam(name = "pageSize", required = false, defaultValue = "15") int pageSize){
+                              @RequestParam(name = "pageSize", required = false, defaultValue = "15") int pageSize,
+                              @RequestParam(name = "orderBy", required = false, defaultValue = "id") int orderBy,
+                              @RequestParam(name = "name", required = false, defaultValue = "") String name){
 
         long count = courseService.count();
 
@@ -38,13 +40,14 @@ public class CourseController {
             totalPages++;
         }
 
-        List<Course> coursesList = courseService.findAll(pageNumber, pageSize);
+        List<Course> coursesList = courseService.findAll(pageNumber, pageSize, orderBy, name);
 
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("totalCount", count);
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("courses", coursesList);
+        model.addAttribute("name", name);
 
         return "universitycrm/course-table";
     }

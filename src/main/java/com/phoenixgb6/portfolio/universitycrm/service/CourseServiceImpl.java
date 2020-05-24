@@ -28,8 +28,8 @@ public class CourseServiceImpl implements ServiceS<Course> {
 
     @Override
     @Transactional
-    public List<Course> findAll(int pageNumber, int pageSize) {
-        return courseDAO.findAll(pageNumber, pageSize);
+    public List<Course> findAll(int pageNumber, int pageSize, int orderBy, String name) {
+        return courseDAO.findAll(pageNumber, pageSize, orderBy,name);
     }
 
     @Override
@@ -66,5 +66,10 @@ public class CourseServiceImpl implements ServiceS<Course> {
     @Transactional
     public long count(){
         return courseDAO.count();
+    }
+
+    @Override
+    public long count(String code) {
+        return courseDAO.count(code);
     }
 }

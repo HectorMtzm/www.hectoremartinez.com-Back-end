@@ -1,15 +1,12 @@
 package com.phoenixgb6.portfolio.universitycrm.dao;
 
-import com.phoenixgb6.portfolio.universitycrm.entity.Course;
 import com.phoenixgb6.portfolio.universitycrm.entity.Student;
-import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,23 +35,41 @@ public class StudentDAOImpl implements DAO<Student> {
     }
 
     @Override
-    public List<Student> findAll(int pageNumber, int pageSize) {
-
-        //get all, not pages
-//        //get current session
-//        Session session = entityManager.unwrap(Session.class);
-//
-//        //create a query
-//        Query<Student> query = session.createQuery("from Student", Student.class);
-//
-//        //execute query and get the result list
-//        List<Student> studentList = query.getResultList();
-//
-//        return studentList;
+    public List<Student> findAll(int pageNumber, int pageSize, int orderBy, String name) {
 
         Session session = entityManager.unwrap(Session.class);
 
-        Query query = session.createQuery("from Student s order by  s.id", Student.class);
+        String queryString = "from Student s ";
+        String queryStringAlt1 = "where s.firstName=:fname and s.lastName=:lname ";
+        String queryStringAlt2 = "order by ";
+
+        String[] names = new String[2];
+
+        if(!name.isEmpty()) {
+            names = name.split(" ");
+            queryString += queryStringAlt1 + queryStringAlt2;
+        }
+        else {
+            queryString += queryStringAlt2;
+        }
+
+        if(orderBy == 1){
+            queryString +=  "s.id";
+        }
+        else if(orderBy == 2){
+            queryString += "s.firstName";
+        }
+        else if(orderBy == 3){
+            queryString += "s.lastName";
+        }
+
+        Query query = session.createQuery(queryString, Student.class);
+
+        if(!name.isEmpty()) {
+            query.setParameter("fname",names[0]);
+            query.setParameter("lname",names[1]);
+        }
+
         query.setFirstResult((pageNumber-1) * pageSize);
         query.setMaxResults(pageSize);
 
@@ -84,10 +99,13 @@ public class StudentDAOImpl implements DAO<Student> {
 
         Session session = entityManager.unwrap(Session.class);
 
-        Query query = session.createQuery("delete from Student where id=:id");
-        query.setParameter("id",id);
+//        Query query = session.createQuery("delete from Student where id=:id");
+//        query.setParameter("id",id);
+//
+//        query.executeUpdate();
 
-        query.executeUpdate();
+        Student student = session.get(Student.class, id);
+        session.delete(student);
     }
 
     @Override
@@ -95,6 +113,21 @@ public class StudentDAOImpl implements DAO<Student> {
         Session session = entityManager.unwrap(Session.class);
 
         Query<Long> query = session.createQuery("select count(id) from Student", Long.class);
+        long count = query.getSingleResult().longValue();
+
+        return count;
+    }
+
+    @Override
+    public long count(String name) {
+        Session session = entityManager.unwrap(Session.class);
+
+        String[] names = name.split(" ");
+
+        Query<Long> query = session.createQuery("select count(*) from Student s where s.firstName=:fname and s.lastName=:lname", Long.class);
+        query.setParameter("fname", names[0]);
+        query.setParameter("lname", names[1]);
+
         long count = query.getSingleResult().longValue();
 
         return count;

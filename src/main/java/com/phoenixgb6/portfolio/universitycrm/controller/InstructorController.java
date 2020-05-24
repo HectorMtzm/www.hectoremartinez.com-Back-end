@@ -26,7 +26,9 @@ public class InstructorController {
     @GetMapping("/list")
     public String instructorsList(Model model,
                                   @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
-                                  @RequestParam(name = "pageSize", required = false, defaultValue = "15") int pageSize){
+                                  @RequestParam(name = "pageSize", required = false, defaultValue = "15") int pageSize,
+                                  @RequestParam(name = "orderBy", required = false, defaultValue = "id") int orderBy,
+                                  @RequestParam(name = "name", required = false, defaultValue = "") String name){
 
         long count = instructorService.count();
 
@@ -36,7 +38,7 @@ public class InstructorController {
             totalPages++;
         }
 
-        List<Instructor> instructorsList = instructorService.findAll(pageNumber, pageSize);
+        List<Instructor> instructorsList = instructorService.findAll(pageNumber, pageSize, orderBy, name);
 
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("totalPages", totalPages);
