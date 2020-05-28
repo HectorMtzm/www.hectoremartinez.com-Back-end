@@ -16,8 +16,14 @@ public class Course {
     @Column(name="title")
     private String title;
 
-    @Column(name="code")
-    private String code;
+    @Column(name="prefix")
+    private String prefix;
+
+    @Column(name ="description")
+    private String description;
+
+    @Column(name = "number")
+    private int number;
 
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
@@ -41,9 +47,11 @@ public class Course {
     public Course() {
     }
 
-    public Course(String title, String code) {
+    public Course(String title, String prefix, String description, int number) {
         this.title = title;
-        this.code = code;
+        this.prefix = prefix;
+        this.description = description;
+        this.number = number;
     }
 
     public int getId() {
@@ -78,16 +86,6 @@ public class Course {
         this.reviews = reviews;
     }
 
-    // Convenience method
-    public void addReview(Review theReview) {
-
-        if (reviews == null) {
-            reviews = new ArrayList<>();
-        }
-
-        reviews.add(theReview);
-    }
-
     public List<Student> getStudents() {
         return students;
     }
@@ -96,12 +94,28 @@ public class Course {
         this.students = students;
     }
 
-    public String getCode() {
-        return code;
+    public String getPrefix() {
+        return prefix;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setPrefix(String code) {
+        this.prefix = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     // convenience method
@@ -114,11 +128,24 @@ public class Course {
         students.add(theStudent);
     }
 
+    // Convenience method
+    public void addReview(Review theReview) {
+
+        if (reviews == null) {
+            reviews = new ArrayList<>();
+        }
+
+        reviews.add(theReview);
+    }
+
     @Override
     public String toString() {
         return "Course{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", prefix='" + prefix + '\'' +
+                ", description='" + description + '\'' +
+                ", number=" + number +
                 ", instructor=" + instructor +
                 ", reviews=" + reviews +
                 ", students=" + students +

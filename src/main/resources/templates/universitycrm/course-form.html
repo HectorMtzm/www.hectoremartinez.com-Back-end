@@ -37,7 +37,14 @@
             <!-- Add hidden form field to handle update -->
             <input type="hidden" th:field="*{id}" />
             <div>
-                <input type="text" th:field="*{code}" placeholder="Course Number">
+                <input type="text" th:field="*{prefix}" placeholder="Prefix">
+
+                <!-- Add error message (if present) -->
+                <!--                <span th:if="${#fields.hasErrors('firstName')}"-->
+                <!--                  th:errors="*{firstName}"></span>-->
+            </div>
+            <div>
+                <input type="text" th:field="*{number}" placeholder="Number">
 
                 <!-- Add error message (if present) -->
                 <!--                <span th:if="${#fields.hasErrors('firstName')}"-->
@@ -49,6 +56,12 @@
                 <!-- Add error message (if present) -->
                 <!--            <span th:if="${#fields.hasErrors('lastName')}"-->
                 <!--                  th:errors="*{lastName}"></span>-->
+            </div>
+            <div>
+                <textarea th:field="*{description}" cols="30" rows="10" placeholder="Description" maxlength="512"></textarea>
+                <!-- Add error message (if present) -->
+                <!--                <span th:if="${#fields.hasErrors('firstName')}"-->
+                <!--                  th:errors="*{firstName}"></span>-->
             </div>
             <div>
                 <select name="instructorId" form="addForm">

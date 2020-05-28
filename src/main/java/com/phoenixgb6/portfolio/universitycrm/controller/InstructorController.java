@@ -2,6 +2,7 @@ package com.phoenixgb6.portfolio.universitycrm.controller;
 
 import com.phoenixgb6.portfolio.universitycrm.entity.Course;
 import com.phoenixgb6.portfolio.universitycrm.entity.Instructor;
+import com.phoenixgb6.portfolio.universitycrm.entity.Student;
 import com.phoenixgb6.portfolio.universitycrm.service.ServiceS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,26 +26,30 @@ public class InstructorController {
 
     @GetMapping("/list")
     public String instructorsList(Model model,
-                                  @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
-                                  @RequestParam(name = "pageSize", required = false, defaultValue = "15") int pageSize,
-                                  @RequestParam(name = "orderBy", required = false, defaultValue = "id") int orderBy,
-                                  @RequestParam(name = "name", required = false, defaultValue = "") String name){
+                                  @RequestParam(name = "page", required = false, defaultValue = "1") int pageNumber,
+                                  @RequestParam(name = "paSi", required = false, defaultValue = "15") int pageSize,
+                                  @RequestParam(name = "order", required = false, defaultValue = "1") int order,
+                                  @RequestParam(name = "search", required = false, defaultValue = "") String search){
 
-        long count = instructorService.count();
+        long count;
+
+        if(search.equals("")){ count = instructorService.count(); }
+        else{ count = instructorService.count(search); }
 
         int totalPages = (int) Math.floor(count / pageSize);
-
         if ((count % pageSize) > 0) {
             totalPages++;
         }
 
-        List<Instructor> instructorsList = instructorService.findAll(pageNumber, pageSize, orderBy, name);
+        List<Instructor> instructorsList = instructorService.findAll(pageNumber, pageSize, order, search);
 
-        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("paSi", pageSize);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("totalCount", count);
-        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("page", pageNumber); //current page
         model.addAttribute("instructors", instructorsList);
+        model.addAttribute("order", order);
+        model.addAttribute("search", search);
 
         return "universitycrm/instructor-table";
     }

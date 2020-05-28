@@ -55,6 +55,16 @@
                             <p th:text="${individual.details.youtubeChannel}"></p>
                         </div>
                     </div>
+                    <div th:if="${staff}">
+                        <a class="btn btn-negative" th:href="@{/instructors/delete(individualId=${individual.id})}"
+                           onclick="if(!(confirm('Are you sure you want to delete this instructor?'))) return false">Delete</a>
+                        <a class="btn btn-neutro" th:href="@{/instructors/updateForm(individualId=${individual.id})}">Update</a>
+                    </div>
+                    <div th:unless="${staff}">
+                        <a class="btn btn-negative" th:href="@{/students/delete(individualId=${individual.id})}"
+                           onclick="if(!(confirm('Are you sure you want to delete this student?'))) return false">Delete</a>
+                        <a class="btn btn-neutro" th:href="@{/students/updateForm(individualId=${individual.id})}">Update</a>
+                    </div>
                 </div>
 
                 <div class="courses">
@@ -79,7 +89,7 @@
                             <tr th:each="tempCourse : ${individual.courses}">
                                 <td><a th:text="${tempCourse.id}" th:href="@{/courses/{id}(id=${tempCourse.id})}"></a>
                                 </td>
-                                <td th:text="${tempCourse.code}"></td>
+                                <td th:text="${tempCourse.prefix}"></td>
                                 <td th:text="${tempCourse.title}"></td>
                                 <div th:if="${!staff}">
                                     <td th:text="${tempCourse.getInstructor()}"></td>

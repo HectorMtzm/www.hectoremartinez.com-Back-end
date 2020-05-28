@@ -18,10 +18,21 @@ html, body{
 
 a{
     text-decoration: none;
+    text-align: center;
 }
 
 ul{
     list-style: none;
+}
+
+input, select{
+    border: 1px solid #797979;
+    padding: 4px 5px;
+    border-radius: 5px;
+}
+
+select{
+    cursor: pointer;
 }
 
 /*----------------Utilities----------------*/
@@ -31,11 +42,6 @@ ul{
     max-width: 1200px;
     overflow: auto;
     padding: 0 20px;
-}
-
-.small-container {
-    margin: auto;
-    max-width: 925px;
 }
 
 .primary-color{
@@ -50,10 +56,11 @@ ul{
 .btn {
     cursor: pointer;
     display: inline-block;
-    padding: 10px 30px;
+    padding: 8px 30px;
     color: #fff;
     border: none;
     border-radius: 5px;
+    line-height: inherit
 }
 
 .btn-primary,
@@ -80,6 +87,16 @@ ul{
     background: #f4f4f4;
 }
 
+.btn-negative{
+    color: #fff;
+    background-color: #e82a2a;
+}
+
+.btn-neutro{
+    background-color: #2194dc;
+    color: #fff;
+}
+
 .btn-outline {
     background: transparent;
     border: 1px solid #fff;
@@ -89,13 +106,13 @@ ul{
     background-color: var(--primary-color-dark);
 }
 
-.select-container{
-    display: flex;
-    align-items: center;
-}
-
 select, input{
     font-size: 1rem;
+}
+
+.v-line{
+    border-right:1px solid #797979;
+    width: 1%;
 }
 
 
@@ -106,6 +123,7 @@ select, input{
 .navbar{
     background-color: #c9c9c9;
     height: 70px;
+    margin-bottom: 20px;
 }
 
 .navbar .container {
@@ -204,14 +222,43 @@ select, input{
 
 /*---------------------Tables---------------------*/
 
-.small-container{
-    display: flex;
-    flex-direction: column;
-}
-
-.small-container .table-options{
+.container.list{
     display: flex;
     justify-content: space-between;
+}
+
+.container .table-options{
+    display: flex;
+    width: 20%;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.container .table-options div .btn{
+    margin-top: 5px;
+    margin-bottom: 25px;
+}
+
+.container .table-options div,
+.container .table-options div select,
+.container .table-options div input{
+    width: 100%;
+}
+
+.table-options .btn{
+    width: 100%;
+}
+
+.container .table-content {
+    width: 77%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container .table-content .btn{
+    align-self: start;
 }
 
 table {
@@ -238,7 +285,6 @@ table td{
     background-color: #ddd;
 }
 
-
 .pagination .selected-page{
     background-color: var(--primary-color);
     color: #fff;
@@ -253,6 +299,7 @@ table td{
 }
 
 .pagination{
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }

@@ -1,6 +1,7 @@
 package com.phoenixgb6.portfolio.universitycrm.dao;
 
 import com.phoenixgb6.portfolio.universitycrm.entity.Instructor;
+import com.phoenixgb6.portfolio.universitycrm.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,19 +40,37 @@ public class InstructorDAOImpl implements DAO<Instructor>{
         //get current session
         Session session = entityManager.unwrap(Session.class);
 
-        String queryString = "";
+        String queryString = "from Instructor s ";
+        String queryStringAlt1 = "where s.firstName=:fname and s.lastName=:lname ";
+        String queryStringAlt2 = "order by ";
+
+        String[] names = new String[2];
+
+        if(!name.isEmpty()) {
+            names = name.split(" ");
+            queryString += queryStringAlt1 + queryStringAlt2;
+        }
+        else {
+            queryString += queryStringAlt2;
+        }
 
         if(orderBy == 1){
-            queryString = "from Instructor s order by  s.id";
+            queryString +=  "s.id";
         }
         else if(orderBy == 2){
-            queryString = "from Instructor s order by  s.firstName";
+            queryString += "s.firstName";
         }
         else if(orderBy == 3){
-            queryString = "from Instructor s order by  s.lastName";
+            queryString += "s.lastName";
         }
 
         Query query = session.createQuery(queryString, Instructor.class);
+
+        if(!name.isEmpty()) {
+            query.setParameter("fname",names[0]);
+            query.setParameter("lname",names[1]);
+        }
+
         query.setFirstResult((pageNumber-1) * pageSize);
         query.setMaxResults(pageSize);
 

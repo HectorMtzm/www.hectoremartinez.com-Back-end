@@ -1,6 +1,7 @@
 package com.phoenixgb6.portfolio.universitycrm.dao;
 
 import com.phoenixgb6.portfolio.universitycrm.entity.Course;
+import com.phoenixgb6.portfolio.universitycrm.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,23 +36,38 @@ public class CourseDAOImpl implements DAO<Course> {
     }
 
     @Override
-    public List<Course> findAll(int pageNumber, int pageSize, int orderBy, String name) {
-        //get current session
+    public List<Course> findAll(int pageNumber, int pageSize, int orderBy, String number) {
         Session session = entityManager.unwrap(Session.class);
 
-        String queryString = "id";
+        String queryString = "from Course c ";
+        String queryStringAlt1 = "where c.number=:number ";
+        String queryStringAlt2 = "order by ";
 
-        if(orderBy == 1){ //id
-            queryString = "from Course s order by  s.id";
+
+        if(!number.isEmpty()) {
+            queryString += queryStringAlt1 + queryStringAlt2;
         }
-        else if(orderBy == 2){ //firstname
-            queryString = "from Course s order by  s.firstName";
+        else {
+            queryString += queryStringAlt2;
         }
-        else if(orderBy == 3){ //lastname
-            queryString = "from Course s order by  s.lastName";
+
+        switch (orderBy){
+            case 1: queryString +=  "c.id";
+                break;
+            case 2: queryString += "c.title";
+                break;
+            case 3: queryString += "c.prefix";
+                break;
+            case 4: queryString += "c.number";
+                break;
         }
 
         Query query = session.createQuery(queryString, Course.class);
+
+        if(!number.isEmpty()) {
+            query.setParameter("number",Integer.parseInt(number));
+        }
+
         query.setFirstResult((pageNumber-1) * pageSize);
         query.setMaxResults(pageSize);
 
@@ -98,11 +114,11 @@ public class CourseDAOImpl implements DAO<Course> {
     }
 
     @Override
-    public long count(String code) {
+    public long count(String number) {
         Session session = entityManager.unwrap(Session.class);
 
-        Query<Long> query = session.createQuery("select count(*) from Course c where c.code=:code", Long.class);
-        query.setParameter("code", code);
+        Query<Long> query = session.createQuery("select count(id) from Course c where c.number=:number", Long.class);
+        query.setParameter("number", Integer.parseInt(number));
 
         long count = query.getSingleResult().longValue();
 
