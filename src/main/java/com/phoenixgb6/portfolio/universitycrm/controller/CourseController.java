@@ -27,12 +27,15 @@ public class CourseController {
 
     @GetMapping("/list")
     public String coursesList(Model model,
-                              @RequestParam(name = "pageNumber", required = false, defaultValue = "1") int pageNumber,
-                              @RequestParam(name = "pageSize", required = false, defaultValue = "15") int pageSize,
-                              @RequestParam(name = "orderBy", required = false, defaultValue = "id") int orderBy,
-                              @RequestParam(name = "name", required = false, defaultValue = "") String name){
+                              @RequestParam(name = "page", required = false, defaultValue = "1") int pageNumber,
+                              @RequestParam(name = "paSi", required = false, defaultValue = "15") int pageSize,
+                              @RequestParam(name = "order", required = false, defaultValue = "1") int order,
+                              @RequestParam(name = "search", required = false, defaultValue = "") String search){
 
-        long count = courseService.count();
+        long count;
+
+        if(search.equals("")){ count = courseService.count(); }
+        else{ count = courseService.count(search); }
 
         int totalPages = (int) Math.floor(count / pageSize);
 
@@ -40,14 +43,15 @@ public class CourseController {
             totalPages++;
         }
 
-        List<Course> coursesList = courseService.findAll(pageNumber, pageSize, orderBy, name);
+        List<Course> coursesList = courseService.findAll(pageNumber, pageSize, order, search);
 
-        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("paSi", pageSize);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("totalCount", count);
-        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("page", pageNumber); //current page
         model.addAttribute("courses", coursesList);
-        model.addAttribute("name", name);
+        model.addAttribute("order", order);
+        model.addAttribute("search", search);
 
         return "universitycrm/course-table";
     }
@@ -79,8 +83,6 @@ public class CourseController {
 
     @GetMapping("/delete")
     public String delete(@RequestParam("courseId") int id) {
-
-        //set courses to null so
 
         // delete the employee
         courseService.deleteById(id);

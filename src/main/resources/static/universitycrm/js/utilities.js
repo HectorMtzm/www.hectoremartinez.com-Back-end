@@ -1,22 +1,34 @@
-function submitForm() {
-    var form = document.getElementById("update-list");
+$('#id').keypress(function (e) {
+    let key = e.keyCode;
+    if(key == 13)
+        $('#findId')[0].click();
+});
 
-    if(validateSearchByName()){
-        form.submit();
+
+function submitForm(type) {
+    let form = document.getElementById("update-list");
+
+    if(type == 's') {
+        if (validateSearchByName())
+            form.submit();
+    }
+    else if(type == 'i') {
+        if (validateSearchByNumber())
+            form.submit();
     }
 
     return false;
 }
 
 function validateSearchByName() {
-    var name = document.getElementById("search").value;
+    let name = document.getElementById("search").value;
 
     if(name == "") {
         removeEmptyAttr();
         return true;
     }
 
-    var names = name.split(" ");
+    let names = name.split(" ");
 
     if(names.length != 2){
         alert("Please enter the first and last name");
@@ -32,11 +44,30 @@ function validateSearchByName() {
     }
 }
 
+function validateSearchByNumber(){
+    let number = document.getElementById("search").value;
+    let intNumber = parseInt(number);
+
+    if(number == ""){
+        removeEmptyAttr();
+        return true;
+    }
+
+    else if(number == intNumber) {
+        if (number.toString().length == 4){
+            removeEmptyAttr();
+            return true;
+        }
+    }
+    alert("Please enter a valid course number");
+    return false;
+}
+
 // Removes empty attributes of the form
 function removeEmptyAttr() {
-    var order = document.getElementById("order");
-    var paSi = document.getElementById("paSi");
-    var search = document.getElementById("search");
+    let order = document.getElementById("order");
+    let paSi = document.getElementById("paSi");
+    let search = document.getElementById("search");
 
     if(order.value == 1)
         order.name="";
@@ -45,3 +76,17 @@ function removeEmptyAttr() {
     if(search.value == "")
         search.name="";
 }
+
+function assignId(){
+    let id = document.getElementById("id").value;
+    let href = document.getElementById("findId").getAttribute("href");
+
+    if(id != parseInt(id) || id == "")
+        return false;
+
+    href += id;
+    document.getElementById("findId").setAttribute("href", href);
+    return true;
+}
+
+

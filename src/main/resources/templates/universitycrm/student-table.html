@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/style.css}">
     <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
-    <script th:src="@{/universitycrm/js/utilities.js}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <title>Thymeleaf Demo</title>
 </head>
 
 <body>
-
     <header>
         <nav class="navbar">
             <div class="container">
@@ -25,96 +25,103 @@
         </nav>
     </header>
 
-    <div class="small-container">
-
+    <div class="container list">
         <div class="table-options">
-            <form id="update-list" th:action="@{/students/list}" method="get" onsubmit="return submitForm()"></form>
-            <a class="btn btn-primary" th:href="@{/students/addForm}">Add Student</a>
-
-            <div class="select-container">
-                <span>Order By: &nbsp;</span>
-                <select id="order" name="order" onchange="return submitForm()" form="update-list">
-                    <option th:selected="${order == 1}" value=1>id</option>
+            <form id="update-list" th:action="@{/students/list}" method="get" onsubmit="return submitForm('s')"></form>
+            <div>
+                <div>Find By ID: &nbsp;</div>
+                <input id="id" placeholder="ID">
+                <a id="findId" class="btn btn-primary" th:href="@{/students/}" onclick="return assignId()">Find</a>
+            </div>
+            <div>
+                <div>Search By Name: &nbsp;</div>
+                <input id="search" name="search" type="text" th:value="${search}" placeholder="First and Last Name" autocomplete="off" form="update-list">
+                <input class="btn btn-primary" type="submit" value="Search" form="update-list">
+            </div>
+            <div>
+                <div>Order By: &nbsp;</div>
+                <select id="order" name="order" onchange="return submitForm('s')" form="update-list">
+                    <option th:selected="${order == 1}" value=1>ID</option>
                     <option th:selected="${order == 2}" value=2>First Name</option>
                     <option th:selected="${order == 3}" value=3>Last Name</option>
                 </select>
             </div>
-            <div class="select-container">
-                <lable>Search By Name: &nbsp;</lable>
-                <input id="search" name="search" type="text" th:value="${search}" placeholder="First and Last Name" autocomplete="off" form="update-list">
-                <input class="btn btn-primary" type="submit" form="update-list">
-            </div>
         </div>
 
-        <table>
-            <thead>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Action</th>
-            </thead>
-            <tbody>
+        <div class="v-line"></div>
 
-                <tr th:each="tempStudent : ${students}">
-                    <td><a th:text="${tempStudent.id}" th:href="@{/students/{id}(id=${tempStudent.id})}"></a> </td>
-                    <td th:text="${tempStudent.firstName}"></td>
-                    <td th:text="${tempStudent.lastName}"></td>
-                    <td th:text="${tempStudent.email}"></td>
-                    <td class="actions">
-                        <a th:href="@{/students/updateForm(individualId=${tempStudent.id})}">Update</a>
-                        |
-                        <a th:href="@{/students/delete(individualId=${tempStudent.id})}"
-                            onclick="if(!(confirm('Are you sure you want to delete this employee?'))) return false">Delete</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-content">
 
-<!-- pagination -->
-        <span class="pagination" th:if="${totalPages != 0}">
-            <span>
+            <a class="btn btn-primary" th:href="@{/students/addForm}">Add Student</a>
+            <table>
+                <thead>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <tr th:each="tempStudent : ${students}">
+                        <td><a th:text="${tempStudent.id}" th:href="@{/students/{id}(id=${tempStudent.id})}"></a> </td>
+                        <td th:text="${tempStudent.firstName}"></td>
+                        <td th:text="${tempStudent.lastName}"></td>
+                        <td th:text="${tempStudent.email}"></td>
+                        <td class="actions">
+                            <a th:href="@{/students/updateForm(individualId=${tempStudent.id})}">Update</a>
+                            |
+                            <a th:href="@{/students/delete(individualId=${tempStudent.id})}"
+                                onclick="if(!(confirm('Are you sure you want to delete this employee?'))) return false">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+ <!-- pagination -->
+            <span class="pagination" th:if="${totalPages != 0}">
+                <span>
 <!-- Handle "First" and "Prev" links -->
-                <div th:if="${page != 1}" th:remove="tag">
-                    <a th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${1}' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}">First</a>
-                    <a th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${page}-1' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}" value="1">Previous</a>
-                </div>
-                <div th:unless="${page != 1}" th:remove="tag">
-                    <a class="disabled">First</a>
-                    <a class="disabled">Previous</a>
-                </div>
+                    <div th:if="${page != 1}" th:remove="tag">
+                        <a th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${1}' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}">First</a>
+                        <a th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${page}-1' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}" value="1">Previous</a>
+                    </div>
+                    <div th:unless="${page != 1}" th:remove="tag">
+                        <a class="disabled">First</a>
+                        <a class="disabled">Previous</a>
+                    </div>
 <!-- Handle "..." if there are more pages -->
-                <span th:if="${page > 5 and (totalPages > 10)}">...</span>
+                    <span th:if="${page > 5 and (totalPages > 10)}">...</span>
 <!-- Handle Page number links -->
-                <div th:each="i: ${#numbers.sequence(1,  totalPages, 1)}" th:remove="tag">
-                    <span th:if="${i > (page - 5) and i <= (page + 5) or (page <= 5 and i <= 10) or totalPages <= 10}" th:remove="tag">
-                        <a th:if="${i == page}" th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${i}' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}" th:classappend="selected-page" th:text="${i}"th:value="${i}" form="update-list"></a>
-                        <a th:unless="${i == page}" th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${i}' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}" th:text="${i}"></a>
-                    </span>
-                </div>
+                    <div th:each="i: ${#numbers.sequence(1,  totalPages, 1)}" th:remove="tag">
+                        <span th:if="${i > (page - 5) and i <= (page + 5) or (page <= 5 and i <= 10) or totalPages <= 10}" th:remove="tag">
+                            <a th:if="${i == page}" th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${i}' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}" th:classappend="selected-page" th:text="${i}"th:value="${i}"></a>
+                            <a th:unless="${i == page}" th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${i}' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}" th:text="${i}"></a>
+                        </span>
+                    </div>
 <!-- Handle "..." if there are more pages -->
-                <span th:if="${page < (totalPages - 5) and (totalPages > 10)}">...</span>
+                    <span th:if="${page < (totalPages - 5) and (totalPages > 10)}">...</span>
 <!-- Handle "Next" and "Prev" links -->
-                <div th:if="${page != totalPages}" th:remove="tag">
-                    <a th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${page + 1}' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}">Next</a>
-                    <a th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${totalPages}' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}">Last</a>
-                </div>
-                <div th:unless="${page != totalPages}" th:remove="tag">
-                    <a th:classappend="disabled">Next</a>
-                    <a th:classappend="disabled">Last</a>
-                </div>
-            </span>
+                    <div th:if="${page != totalPages}" th:remove="tag">
+                        <a th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${page + 1}' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}">Next</a>
+                        <a th:href="@{/students/list(__(${order} != 1) ? 'order=${order}' : ','__,__(${page} == 1) ? 'page=${totalPages}' : ','__,__(${search} == null) ? 'search=${search}' : ','__,__(${paSi} != 15) ? 'paSi=${paSi}' : ','__)}">Last</a>
+                    </div>
+                    <div th:unless="${page != totalPages}" th:remove="tag">
+                        <a th:classappend="disabled">Next</a>
+                        <a th:classappend="disabled">Last</a>
+                    </div>
+                </span>
 <!-- items per page selector-->
-            <span class="select-container">
-                <span>Items Per Page</span>
-                <select id="paSi" name="paSi" onchange="return submitForm()" form="update-list">
-                    <option th:selected="${paSi == 15}" value="15">15</option>
-                    <option th:selected="${paSi == 25}" value="25">25</option>
-                    <option th:selected="${paSi == 50}" value="50">50</option>
-                </select>
+                <span>
+                    <span>Items Per Page: &nbsp;</span>
+                    <select id="paSi" name="paSi" onchange="return submitForm('s')" form="update-list">
+                        <option th:selected="${paSi == 15}" value="15">15</option>
+                        <option th:selected="${paSi == 25}" value="25">25</option>
+                        <option th:selected="${paSi == 50}" value="50">50</option>
+                    </select>
+                </span>
             </span>
-        </span>
-
+        </div>
     </div>
+    <script type="text/javascript" th:src="@{/universitycrm/js/utilities.js}"></script>
+
 </body>
 </html>
