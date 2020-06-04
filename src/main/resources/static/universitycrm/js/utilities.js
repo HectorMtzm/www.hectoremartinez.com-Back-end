@@ -4,6 +4,18 @@ $('#id').keypress(function (e) {
         $('#findId')[0].click();
 });
 
+function formatDocument(){
+    formatPhoneNumber();
+}
+
+function formatPhoneNumber() {
+    let phoneNumber = $('#phoneNumber').text();
+    if(phoneNumber != ""){
+        $('#phoneNumber').text("(" + phoneNumber.slice(0,3) + ") "
+            + phoneNumber.slice(3,6) + "-" + phoneNumber.slice(6,10));
+    }
+
+}
 
 function submitForm(type) {
     let form = document.getElementById("update-list");
@@ -81,12 +93,14 @@ function assignId(){
     let id = document.getElementById("id").value;
     let href = document.getElementById("findId").getAttribute("href");
 
-    if(id != parseInt(id) || id == "")
+    if(id != parseInt(id) || id == "" || id < 1)
         return false;
 
     href += id;
     document.getElementById("findId").setAttribute("href", href);
     return true;
 }
+
+formatDocument();
 
 

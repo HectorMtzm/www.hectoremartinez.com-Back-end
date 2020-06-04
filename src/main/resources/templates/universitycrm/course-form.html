@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/normalize.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/style.css}">
     <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
     <title>Course Form</title>
@@ -26,45 +27,50 @@
 </header>
 
 <main>
-    <div class="container">
+    <div class="form-container">
         <h3>Course Directory</h3>
 
-        <p>Save Course</p>
-
-        <form action="#" th:action="@{/courses/save}" th:object="${course}"
-              method="POST" id="addForm" name="addForm">
+        <form action="#" th:action="@{/courses/save}" th:object="${course}" method="POST" autocomplete="off">
 
             <!-- Add hidden form field to handle update -->
             <input type="hidden" th:field="*{id}" />
-            <div>
-                <input type="text" th:field="*{prefix}" placeholder="Prefix">
+
+            <div class="form-frag input-container">
+                <label>Course Prefix:</label>
+                <input type="text" th:field="*{prefix}">
 
                 <!-- Add error message (if present) -->
-                <!--                <span th:if="${#fields.hasErrors('firstName')}"-->
-                <!--                  th:errors="*{firstName}"></span>-->
+                <i th:if="${#fields.hasErrors('prefix')}" class="error-icon fas fa-exclamation-circle">
+                    <span th:errors="*{prefix}" class="text-bubble"></span>
+                </i>
             </div>
-            <div>
-                <input type="text" th:field="*{number}" placeholder="Number">
+            <div class="form-frag input-container">
+                <label>Course Number:</label>
+                <input type="text" th:field="*{number}">
 
-                <!-- Add error message (if present) -->
-                <!--                <span th:if="${#fields.hasErrors('firstName')}"-->
-                <!--                  th:errors="*{firstName}"></span>-->
+                <i th:if="${#fields.hasErrors('number')}" class="error-icon fas fa-exclamation-circle">
+                    <span th:errors="*{number}" class="text-bubble"></span>
+                </i>
             </div>
-            <div>
-                <input type="text" th:field="*{title}" placeholder="Title">
+            <div class="form-frag input-container">
+                <label>Course Title:</label>
+                <input type="text" th:field="*{title}">
 
-                <!-- Add error message (if present) -->
-                <!--            <span th:if="${#fields.hasErrors('lastName')}"-->
-                <!--                  th:errors="*{lastName}"></span>-->
+                <i th:if="${#fields.hasErrors('title')}" class="error-icon fas fa-exclamation-circle">
+                    <span th:errors="*{title}" class="text-bubble"></span>
+                </i>
             </div>
-            <div>
-                <textarea th:field="*{description}" cols="30" rows="10" placeholder="Description" maxlength="512"></textarea>
-                <!-- Add error message (if present) -->
-                <!--                <span th:if="${#fields.hasErrors('firstName')}"-->
-                <!--                  th:errors="*{firstName}"></span>-->
+            <div class="form-frag input-container">
+                <label>Description:</label>
+                <textarea th:field="*{description}" cols="31" rows="10" maxlength="512"></textarea>
+
+                <i th:if="${#fields.hasErrors('description')}" class="error-icon fas fa-exclamation-circle">
+                    <span th:errors="*{description}" class="text-bubble"></span>
+                </i>
             </div>
-            <div>
-                <select name="instructorId" form="addForm">
+            <div class="form-frag input-container">
+                <label>Instructor:</label>
+                <select name="instructorId">
                     <option value="0" th:text="--"></option>
                     <option th:each="tempInstructor : ${instructorList}"
                             th:text="${tempInstructor.id} + '. ' + ${tempInstructor.firstName} + ' ' + ${tempInstructor.lastName}"
@@ -72,8 +78,7 @@
                             th:selected="${tempInstructor.id == instructorId}"></option>
                 </select>
             </div>
-
-            <button type="submit">Save</button>
+            <button class="btn btn-primary" type="submit">Save</button>
         </form>
     </div>
 </main>

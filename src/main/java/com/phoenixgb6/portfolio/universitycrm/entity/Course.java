@@ -1,6 +1,8 @@
 package com.phoenixgb6.portfolio.universitycrm.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,17 +15,21 @@ public class Course {
     @Column(name="id")
     private int id;
 
+    @NotBlank(message = "{title.blank}")
     @Column(name="title")
     private String title;
 
+    @NotBlank(message = "{prefix.blank}")
     @Column(name="prefix")
     private String prefix;
 
+    @NotBlank(message = "{description.blank}")
     @Column(name ="description")
     private String description;
 
-    @Column(name = "number")
-    private int number;
+    @Pattern(regexp = "^[0-9]{4}", message = "{number.invalid}")
+    @Column(name ="number")
+    private String number;
 
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
@@ -47,7 +53,7 @@ public class Course {
     public Course() {
     }
 
-    public Course(String title, String prefix, String description, int number) {
+    public Course(String title, String prefix, String description, String number) {
         this.title = title;
         this.prefix = prefix;
         this.description = description;
@@ -110,11 +116,11 @@ public class Course {
         this.description = description;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
@@ -126,6 +132,10 @@ public class Course {
         }
 
         students.add(theStudent);
+    }
+
+    public void removeStudent(Student student) {
+         students.remove(student);
     }
 
     // Convenience method

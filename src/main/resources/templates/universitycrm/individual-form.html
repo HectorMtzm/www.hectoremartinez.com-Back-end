@@ -5,6 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/normalize.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/style.css}">
     <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
     <title th:text="${staff} ? 'Instructor Form' : 'Student Form'"></title>
@@ -26,123 +27,128 @@
 </header>
 
 <main>
-    <div class="container">
+    <div class="form-container">
         <h3 th:text="${staff} ? 'Instructor Directory' : 'Student Directory'"></h3>
 
-        <p>Save Employee</p>
-
-        <form action="#" th:action="${staff} ? @{/instructors/save} : @{/students/save}" th:object="${individual}"
-              method="POST">
+        <form action="#" th:action="${staff} ? @{/instructors/save} : @{/students/save}" th:object="${individual}" method="POST" autocomplete="off">
 
             <!-- Add hidden form field to handle update -->
             <input type="hidden" th:field="*{id}" />
-            <div>
-                <input type="text" th:field="*{firstName}" placeholder="First name">
 
-                <!-- Add error message (if present) -->
-                <!--                <span th:if="${#fields.hasErrors('firstName')}"-->
-                <!--                  th:errors="*{firstName}"></span>-->
+            <div class="two-inputs form-frag">
+                <div class="input-container">
+                    <label>First Name:</label>
+                    <input type="text" th:field="*{firstName}"  th:classappend="${#fields.hasErrors('firstName')} ? 'error-border'">
+
+                    <!-- Add error message (if present) -->
+                    <i th:if="${#fields.hasErrors('firstName')}" class="error-icon fas fa-exclamation-circle">
+                        <span th:errors="*{firstName}" class="text-bubble"></span>
+                    </i>
+                </div>
+                <div class="input-container">
+                    <label>Last Name:</label>
+                    <input type="text" th:field="*{lastName}"  th:classappend="${#fields.hasErrors('lastName')} ? 'error-border'">
+                    <i th:if="${#fields.hasErrors('lastName')}" class="error-icon fas fa-exclamation-circle">
+                        <span th:errors="*{lastName}" class="text-bubble"></span>
+                    </i>
+                </div>
             </div>
-            <div>
-                <input type="text" th:field="*{lastName}" placeholder="Last name">
 
-                <!-- Add error message (if present) -->
-                <!--            <span th:if="${#fields.hasErrors('lastName')}"-->
-                <!--                  th:errors="*{lastName}"></span>-->
-            </div>
-            <div>
-                <input type="text" th:field="*{email}" placeholder="Email">
-
-                <!-- Add error message (if present) -->
-                <!--            <span th:if="${#fields.hasErrors('email')}"-->
-                <!--                  th:errors="*{email}"></span>-->
+            <div class="form-frag input-container">
+                <label>Email:</label>
+                <input type="text" th:field="*{email}"  th:classappend="${#fields.hasErrors('email')} ? 'error-border'">
+                <i th:if="${#fields.hasErrors('email')}" class="error-icon fas fa-exclamation-circle">
+                    <span th:errors="*{email}" class="text-bubble"></span>
+                </i>
             </div>
 
             <div id="student" th:if="${!staff}">
                 <input type="hidden" th:field="*{details.id}" />
-                <div>
-                    <input type="text" th:field="*{details.phoneNumber}" placeholder="Phone Number">
-
-                    <!-- Add error message (if present) -->
-                    <!--                <span th:if="${#fields.hasErrors('phoneNumber')}"-->
-                    <!--                      th:errors="*{studentDetail.phoneNumber}"></span>-->
+                <div class="form-frag input-container">
+                    <label>Phone Number:</label>
+                    <input type="text" th:field="*{details.phoneNumber}"  th:classappend="${#fields.hasErrors('details.phoneNumber')} ? 'error-border'" maxlength="10">
+                    <i th:if="${#fields.hasErrors('details.phoneNumber')}" class="error-icon fas fa-exclamation-circle">
+                        <span th:errors="*{details.phoneNumber}" class="text-bubble"></span>
+                    </i>
                 </div>
-                <div>
-                    <input type="text" th:field="*{details.major}" placeholder="Major">
-
-                    <!-- Add error message (if present) -->
-                    <!--                <span th:if="${#fields.hasErrors('major')}"-->
-                    <!--                      th:errors="*{studentDetail.major}"></span>-->
+                <div class="form-frag input-container">
+                    <label>Major:</label>
+                    <input type="text" th:field="*{details.major}"  th:classappend="${#fields.hasErrors('details.major')} ? 'error-border'">
+                    <i th:if="${#fields.hasErrors('details.major')}" class="error-icon fas fa-exclamation-circle">
+                        <span th:errors="*{details.major}" class="text-bubble"></span>
+                    </i>
                 </div>
-                <div>
-                    <input type="text" th:field="*{details.profilePic}" placeholder="Profile Picture URL">
-
-                    <!-- Add error message (if present) -->
-                    <!--                <span th:if="${#fields.hasErrors('profilePic')}"-->
-                    <!--                      th:errors="*{studentDetail.profilePic}"></span>-->
+                <div class="form-frag input-container">
+                    <label>Date of Birth:</label>
+                    <input type="text" th:field="*{details.dateOfBirth}"  th:classappend="${#fields.hasErrors('details.dateOfBirth')} ? 'error-border'" placeholder="MM/DD/YYYY">
+                    <i th:if="${#fields.hasErrors('details.dateOfBirth')}" class="error-icon fas fa-exclamation-circle">
+                        <span th:errors="*{details.dateOfBirth}" class="text-bubble"></span>
+                    </i>
                 </div>
-                <div>
-                    <input type="text" th:field="*{details.dateOfBirth}" placeholder="Date of Birth">
-
-                    <!-- Add error message (if present) -->
-                    <!--                <span th:if="${#fields.hasErrors('dateOfBirth')}"-->
-                    <!--                      th:errors="*{studentDetail.dateOfBirth}"></span>-->
+                <div class="form-frag input-container">
+                    <label>Profile Picture:</label>
+                    <input type="text" th:field="*{details.profilePic}"  th:classappend="${#fields.hasErrors('details.profilePic')} ? 'error-border'" placeholder="URL">
+                    <i th:if="${#fields.hasErrors('details.profilePic')}" class="error-icon fas fa-exclamation-circle">
+                        <span th:errors="*{details.profilePic}" class="text-bubble"></span>
+                    </i>
                 </div>
-                <div>
-                    <input type="text" th:field="*{details.state}" placeholder="State">
-
-                    <!-- Add error message (if present) -->
-                    <!--                <span th:if="${#fields.hasErrors('state')}"-->
-                    <!--                      th:errors="*{studentDetail.state}"></span>-->
+                <div class="form-frag input-container">
+                    <label>Street Address:</label>
+                    <input type="text" th:field="*{details.address}"  th:classappend="${#fields.hasErrors('details.address')} ? 'error-border'">
+                    <i th:if="${#fields.hasErrors('details.address')}" class="error-icon fas fa-exclamation-circle">
+                        <span th:errors="*{details.address}" class="text-bubble"></span>
+                    </i>
                 </div>
-                <div>
-                    <input type="text" th:field="*{details.city}" placeholder="City">
-
-                    <!-- Add error message (if present) -->
-                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
-                    <!--                      th:errors="*{studentDetail.city}"></span>-->
-                </div>
-                <div>
-                    <input type="text" th:field="*{details.address}" placeholder="address">
-
-                    <!-- Add error message (if present) -->
-                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
-                    <!--                      th:errors="*{studentDetail.city}"></span>-->
+                <div class="form-frag two-inputs">
+                    <div class="input-container">
+                        <label>City:</label>
+                        <input type="text" th:field="*{details.city}"  th:classappend="${#fields.hasErrors('details.city')} ? 'error-border'">
+                        <i th:if="${#fields.hasErrors('details.city')}" class="error-icon fas fa-exclamation-circle">
+                            <span th:errors="*{details.city}" class="text-bubble"></span>
+                        </i>
+                    </div>
+                    <div class="input-container">
+                        <label>State:</label>
+                        <input type="text" th:field="*{details.state}"  th:classappend="${#fields.hasErrors('details.state')} ? 'error-border'">
+                        <i th:if="${#fields.hasErrors('details.state')}" class="error-icon fas fa-exclamation-circle">
+                            <span th:errors="*{details.state}" class="text-bubble"></span>
+                        </i>
+                    </div>
                 </div>
             </div>
 
             <div id="staff" th:if="${staff}">
                 <input type="hidden" th:field="*{details.id}" />
-                <div>
-                    <input type="text" th:field="*{details.office}" placeholder="Office">
-
-                    <!-- Add error message (if present) -->
-                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
-                    <!--                      th:errors="*{studentDetail.city}"></span>-->
+                <div class="form-frag input-container">
+                    <label>Office:</label>
+                    <input type="text" th:field="*{details.office}"  th:classappend="${#fields.hasErrors('details.office')} ? 'error-border'">
+                    <i th:if="${#fields.hasErrors('details.office')}" class="error-icon fas fa-exclamation-circle">
+                        <span th:errors="*{details.office}" class="text-bubble"></span>
+                    </i>
                 </div>
-                <div>
-                    <input type="text" th:field="*{details.phoneNumber}" placeholder="Phone number">
-
-                    <!-- Add error message (if present) -->
-                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
-                    <!--                      th:errors="*{studentDetail.city}"></span>-->
+                <div class="form-frag input-container">
+                    <label>Phone Number:</label>
+                    <input type="text" th:field="*{details.phoneNumber}"  th:classappend="${#fields.hasErrors('details.phoneNumber')} ? 'error-border'"maxlength="10">
+                    <i th:if="${#fields.hasErrors('details.phoneNumber')}" class="error-icon fas fa-exclamation-circle">
+                        <span th:errors="*{details.phoneNumber}" class="text-bubble"></span>
+                    </i>
                 </div>
-                <div>
-                    <input type="text" th:field="*{details.youtubeChannel}" placeholder="Youtube Channel">
-
-                    <!-- Add error message (if present) -->
-                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
-                    <!--                      th:errors="*{studentDetail.city}"></span>-->
+                <div class="form-frag input-container">
+                    <label>Youtube Channel:</label>
+                    <input type="text" th:field="*{details.youtubeChannel}"  th:classappend="${#fields.hasErrors('details.youtubeChannel')} ? 'error-border'">
+                    <i th:if="${#fields.hasErrors('details.youtubeChannel')}" class="error-icon fas fa-exclamation-circle">
+                        <span th:errors="*{details.youtubeChannel}" class="text-bubble"></span>
+                    </i>
                 </div>
-                <div>
-                    <input type="text" th:field="*{details.profilePic}" placeholder="Profile Picture URL">
-
-                    <!-- Add error message (if present) -->
-                    <!--                <span th:if="${#fields.hasErrors('city')}"-->
-                    <!--                      th:errors="*{studentDetail.city}"></span>-->
+                <div class="form-frag input-container">
+                    <label>Profile Picture:</label>
+                    <input type="text" th:field="*{details.profilePic}"  th:classappend="${#fields.hasErrors('details.profilePic')} ? 'error-border'">
+                    <i th:if="${#fields.hasErrors('details.youtubeChannel')}" class="error-icon fas fa-exclamation-circle">
+                        <span th:errors="*{details.profilePic}" class="text-bubble"></span>
+                    </i>
                 </div>
             </div>
-            <button type="submit">Save</button>
+            <button class="btn btn-primary" type="submit">Save</button>
         </form>
     </div>
 </main>

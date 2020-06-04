@@ -25,14 +25,29 @@ ul{
     list-style: none;
 }
 
-input, select{
+input, select, textarea{
     border: 1px solid #797979;
     padding: 4px 5px;
     border-radius: 5px;
+    font-size: 1rem;
+}
+
+input, select, textarea{
+    width: 100%;
+}
+
+textarea{
+    resize: none;
 }
 
 select{
     cursor: pointer;
+}
+
+textarea:focus,
+input:focus{
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 2px var(--primary-color);
 }
 
 /*----------------Utilities----------------*/
@@ -42,6 +57,22 @@ select{
     max-width: 1200px;
     overflow: auto;
     padding: 0 20px;
+}
+
+.small-container{
+    margin: auto;
+    max-width: 900px;
+    overflow: auto;
+    padding: 0 20px;
+}
+
+.form-container {
+    margin: auto;
+    max-width: 400px;
+}
+
+.center{
+    text-align: center;
 }
 
 .primary-color{
@@ -69,6 +100,10 @@ select{
     background: var(--primary-color);
 }
 
+.btn-primary:hover {
+    background-color: var(--primary-color-dark);
+}
+
 .btn-secondary,
 .bg-secondary {
     color: #fff;
@@ -92,9 +127,17 @@ select{
     background-color: #e82a2a;
 }
 
+.btn-negative:hover{
+    color: #fff;
+}
+
 .btn-neutro{
     background-color: #2194dc;
     color: #fff;
+}
+
+.btn-neutro:hover{
+    background-color: #1e86c2;
 }
 
 .btn-outline {
@@ -102,19 +145,73 @@ select{
     border: 1px solid #fff;
 }
 
-.btn-primary:hover {
-    background-color: var(--primary-color-dark);
-}
-
-select, input{
-    font-size: 1rem;
-}
-
 .v-line{
     border-right:1px solid #797979;
     width: 1%;
 }
 
+
+
+/*Tabs*/
+
+.tabs{
+    display: flex;
+    justify-content: space-between;
+}
+
+.tab{
+    cursor: pointer;
+    width: 33%;
+    text-align: center;
+}
+
+.tab:hover{
+    color: var(--primary-color);
+}
+
+[data-tab-content]{
+    display: none;
+}
+
+.active[data-tab-content]{
+    display: block;
+}
+
+.tabs-nav{
+    margin-bottom: 20px;
+}
+
+.small-container{
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 1; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+.wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 350px;
+    margin: 100px auto auto;
+    padding: 20px 20px 0;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.wrap textarea{
+    width: 100%;
+    resize: none;
+}
 
 /*---------------------Profile---------------------*/
 
@@ -154,6 +251,7 @@ select, input{
 
 .btn{
     margin: 20px 0;
+    font-size: 1rem;
 }
 
 .profile .userInfo {
@@ -205,19 +303,36 @@ select, input{
 
 /*Courses Table*/
 
-.courses{
+.profile-table{
     width: 72%;
     background-color: #fff;
     border-radius: 10px;
     padding: 0 20px;
 }
 
-.courses h2{
+.profile-table h2{
     margin: 10px 0;
 }
 
-.courses table{
+.profile-table table{
     width: 100%;
+}
+
+.empty-table{
+    margin: 50px 0;
+    text-align: center;
+}
+
+.empty-table h3{
+    color: #6a6a6a;
+}
+
+/*course profile*/
+
+.small-container > h1{
+    text-align: center;
+    margin-bottom: 20px;
+    padding-top: 20px;
 }
 
 /*---------------------Tables---------------------*/
@@ -267,10 +382,25 @@ table {
     margin-bottom: 10px;
 }
 
-table td{
-    text-align: center;
+table td,
+table th{
     border-bottom: 1px solid #797979;
     padding-top: 10px;
+    padding-left: 5px;
+}
+
+table th{
+    text-align: left;
+    min-width: 50px;
+    background-color: #e5e5e5;
+}
+
+table .side-header{
+    box-sizing: unset;
+    text-align: right;
+    min-width: 100px;
+    padding-top: 10px;
+    padding-right: 5px;
 }
 
 /*---------------------Pagination---------------------*/
@@ -303,3 +433,110 @@ table td{
     display: flex;
     justify-content: space-between;
 }
+
+.wrap div{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.pagination select{
+    width: unset;
+}
+
+/*---------------------Forms---------------------*/
+
+.error-text,
+.error-icon{
+    color: red;
+}
+
+.error-icon{
+    position: absolute;
+    display: inline-block;
+}
+
+.error-icon:hover .text-bubble{
+    visibility: visible;
+}
+
+.text-bubble {
+    visibility: hidden;
+    font-weight: 100;
+    font-size: .9rem;
+    width: 140px;
+    background-color: #1d1d1d;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -70px;
+}
+
+.text-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: #1d1d1d;
+    border-bottom: 0;
+    margin-left: -6px;
+    margin-bottom: -6px;
+}
+
+.input-container{
+    position:relative;
+
+}
+
+/*.input-container input{*/
+/*    padding-right: 30px;*/
+/*}*/
+
+.input-container .error-icon {
+    /*position:absolute;*/
+    bottom:6px;
+    right:5px;
+
+}
+
+form .two-inputs{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+form .two-inputs div{
+    width: 45%;
+}
+
+.form-container{
+    padding: 20px 40px;
+    background-color: #fff;
+}
+.form-container form{
+    /*text-align: center;*/
+}
+
+.form-frag{
+    margin-top: 20px;
+}
+
+
+
+.error-border{
+    border: 1px solid red;
+    border-radius: 5px;
+}
+
+form div label{
+    display: block;
+}
+

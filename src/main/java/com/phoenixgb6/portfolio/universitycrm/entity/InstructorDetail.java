@@ -1,6 +1,8 @@
 package com.phoenixgb6.portfolio.universitycrm.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "instructor_detail")
@@ -11,9 +13,11 @@ public class InstructorDetail {
     @Column(name = "id")
     private int id;
 
+    @NotBlank(message = "{office.blank}")
     @Column(name = "office")
     private String office;
 
+    @Pattern(regexp = "^[2-9][0-9]{9}", message = "{phoneNumber.invalid}")
     @Column(name = "office_phone_number")
     private String phoneNumber;
 
