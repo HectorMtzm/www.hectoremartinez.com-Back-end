@@ -2,13 +2,16 @@ package com.phoenixgb6.portfolio.universitycrm.controller;
 
 import com.phoenixgb6.portfolio.universitycrm.entity.Course;
 import com.phoenixgb6.portfolio.universitycrm.entity.Instructor;
-import com.phoenixgb6.portfolio.universitycrm.entity.Student;
+import com.phoenixgb6.portfolio.universitycrm.exception.BadRequestException;
+import com.phoenixgb6.portfolio.universitycrm.exception.NotFoundException;
 import com.phoenixgb6.portfolio.universitycrm.service.ServiceS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -41,7 +44,15 @@ public class InstructorController {
             totalPages++;
         }
 
-        List<Instructor> instructorsList = instructorService.findAll(pageNumber, pageSize, order, search);
+        List<Instructor> instructorsList;
+        try{
+            instructorsList = instructorService.findAll(pageNumber, pageSize, order, search);
+        }
+        catch (Exception ex){
+            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("type", 'i');
+            throw new BadRequestException("Your browser sent a request that this server could not understand", model);
+        }
 
         model.addAttribute("paSi", pageSize);
         model.addAttribute("totalPages", totalPages);
@@ -57,20 +68,37 @@ public class InstructorController {
     @GetMapping("/{id}")
     public String getInstructor(Model model, @PathVariable int id){
 
-        model.addAttribute("individual", instructorService.findById(id));
+        Instructor instructor;
+
+        try{
+            instructor = instructorService.findById(id);
+        }
+        catch (Exception ex){
+            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("type", 'i');
+            throw new NotFoundException("Instructor ID not found  -  " + id, model);
+        }
+        model.addAttribute("individual", instructor);
         model.addAttribute("staff", true);
 
         return "/universitycrm/individual-profile";
     }
 
     @PostMapping("/save")
-    public String saveEmployee(@ModelAttribute("individual") Instructor instructor) {
+    public String saveInstructor(@ModelAttribute("individual") @Valid Instructor instructor, BindingResult bindingResult, Model model) {
 
-        // save the employee
-        instructorService.save(instructor);
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("staff", true);
+            return "universitycrm/individual-form";
+        }
 
-        // use a redirect to prevent duplicate submissions
-        return "redirect:/instructors/list";
+        else{
+            // save the instructor
+            instructorService.save(instructor);
+
+            // use a redirect to prevent duplicate submissions
+            return "redirect:/students/list";
+        }
     }
 
     @GetMapping("/delete")
@@ -91,7 +119,7 @@ public class InstructorController {
         // delete the instructor
         instructorService.deleteById(id);
 
-        // redirect to /employees/list
+        // redirect to /instructors/list
         return "redirect:/instructors/list";
 
     }
@@ -123,12 +151,18 @@ public class InstructorController {
 
     @GetMapping("/removeCourse")
     public String removeCourse(@RequestParam("courseId") int courseId,
-                               @RequestParam("instructorId") int instructorId){
+                               @RequestParam("instructorId") int instructorId, Model model){
 
+        try{
         Instructor instructor = instructorService.findById(instructorId);
         instructor.removeCourse(courseService.findById(courseId));
 
         instructorService.save(instructor);
+        }catch (Exception ex){
+            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("type", 'i');
+            throw new NotFoundException("Instructor or course not found", model);
+        }
 
         return "redirect:/instructors/" + instructorId;
     }

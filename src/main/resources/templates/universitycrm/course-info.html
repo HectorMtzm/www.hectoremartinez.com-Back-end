@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/style.css}">
+    <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
+    <script th:src="@{/universitycrm/js/tabs.js}" defer></script>
+    <title>Course Info</title>
+</head>
+
+<body>
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
+            <ul>
+                <li><a th:href="@{/students/list}">Students</a></li>
+                <li><a th:href="@{/instructors/list}">Instructors</a></li>
+                <li><a class="current" th:href="@{/courses/list}">Courses</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="small-container">
+        <h1 th:text="${course.prefix + ' ' + course.number + ' - ' + course.title}"></h1>
+        <div class="tabs-nav">
+            <ul class="tabs">
+                <li class="current tab" data-tab-target="#course-info">Course Info</li>
+                <li class="tab" data-tab-target="#student-list">Enrolled Students</li>
+                <li class="tab" data-tab-target="#review-list">Reviews</li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div id="course-info" class="active" data-tab-content>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th class="side-header">Course Title:</th>
+                        <td th:text="${course.title}"></td>
+                    </tr>
+                    <tr>
+                        <th class="side-header">Description:</th>
+                        <td th:text="${course.description}"></td>
+                    </tr>
+                    <tr>
+                        <th class="side-header">Instructor:</th>
+                        <td th:if="${course.instructor != null}"><a th:href="@{../instructors/{id}(id=${course.instructor.id})}" th:text="${course.instructor.firstName + ' ' + course.instructor.lastName}"></a></td>
+                        <td th:unless="${course.instructor != null}">Not Assigned</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="student-list" data-tab-content>
+                <table th:if="${#lists.size(course.students) > 0}">
+                    <thead>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tempStudent : ${course.students}">
+                            <td><a th:href="@{../students/{id}(id=${tempStudent.id})}" th:text="${tempStudent.id}"></a></td>
+                            <td th:text="${tempStudent.firstName + ' ' + tempStudent.lastName}"></td>
+                            <td><a th:href="@{/courses/deleteStudent(sid=${tempStudent.id}, cid=${course.id})}">Remove</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button th:if="${#lists.size(course.students) != 0}" class="btn btn-primary" onclick="displayForm('s')">Add Student</button>
+                <div class="empty-table" th:unless="${#lists.size(course.students) > 0}">
+                    <h3>No student has enrolled in this class.</h3>
+                    <button class="btn btn-primary" onclick="displayForm('s')">Add a Student</button>
+                </div>
+            </div>
+
+            <div id="review-list" data-tab-content>
+                <table th:if="${#lists.size(course.reviews) > 0}">
+                    <thead>
+                        <th>ID</th>
+                        <th>Review</th>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="tempReview : ${course.reviews}">
+                            <td th:text="${tempReview.id}"></td>
+                            <td th:text="${tempReview.comment}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button th:if="${#lists.size(course.reviews) != 0}" class="btn btn-primary" onclick="displayForm('r')">Add Review</button>
+                <div class="empty-table" th:unless="${#lists.size(course.reviews) > 0}">
+                    <h3>This course has not received a review yet.</h3>
+                    <button class="btn btn-primary" onclick="displayForm('r')">Add a Review</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div id="addReview" class="overlay">
+    <div class="wrap">
+        <form id="review-form" th:action="@{/courses/saveReview}" th:object="${review}" method="post">
+            <input type="text" th:field="*{id}" hidden/>
+            <input type="text" name="courseId" th:value="${course.id}" hidden/>
+            <label>Review:</label>
+            <textarea id="reviewInput" th:field="*{comment}" cols="30" rows="10" maxlength="512" placeholder="Please enter the review"></textarea>
+        </form>
+        <div>
+            <button class="btn-primary btn" type="submit" form="review-form" onclick="return validate('r')">Submit</button>
+            <button class="btn btn-negative" type="reset" onclick="hideForm('r')">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="addStudent" class="overlay">
+    <div class="wrap">
+        <form id="student-form" th:action="@{/courses/saveStudent}" method="post">
+            <input type="text" name="courseId" th:value="${course.id}" hidden/>
+            <label>Student ID:</label>
+            <input id="studentIdInput" name="studentId" th:value="${studentId}" placeholder="ID"/>
+        </form>
+        <div>
+            <button class="btn-primary btn" type="submit" form="student-form" onclick="return validate('s')">Submit</button>
+            <button class="btn btn-negative" type="reset" onclick="hideForm('S')">Cancel</button>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

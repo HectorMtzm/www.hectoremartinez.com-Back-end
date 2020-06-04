@@ -1,6 +1,9 @@
 package com.phoenixgb6.portfolio.universitycrm.entity;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +16,20 @@ public class Instructor {
     @Column(name = "id")
     private int id;
 
+    @NotBlank(message = "{firstName.blank}")
     @Column(name = "first_name")
     private String firstName;
 
+    @NotBlank(message = "{lastName.blank}")
     @Column(name = "last_name")
     private String lastName;
 
+    @NotBlank(message = "{email.blank}")
+    @Email(message = "{email.invalid}")
     @Column(name = "email")
     private String email;
 
+    @Valid
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="instructor_detail_id")
     private InstructorDetail details;

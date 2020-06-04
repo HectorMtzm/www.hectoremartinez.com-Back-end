@@ -65,7 +65,7 @@ public class CourseDAOImpl implements DAO<Course> {
         Query query = session.createQuery(queryString, Course.class);
 
         if(!number.isEmpty()) {
-            query.setParameter("number",Integer.parseInt(number));
+            query.setParameter("number",number);
         }
 
         query.setFirstResult((pageNumber-1) * pageSize);
@@ -118,7 +118,7 @@ public class CourseDAOImpl implements DAO<Course> {
         Session session = entityManager.unwrap(Session.class);
 
         Query<Long> query = session.createQuery("select count(id) from Course c where c.number=:number", Long.class);
-        query.setParameter("number", Integer.parseInt(number));
+        query.setParameter("number", number);
 
         long count = query.getSingleResult().longValue();
 

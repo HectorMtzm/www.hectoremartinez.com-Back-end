@@ -2,12 +2,16 @@ package com.phoenixgb6.portfolio.universitycrm.controller;
 
 import com.phoenixgb6.portfolio.universitycrm.entity.Course;
 import com.phoenixgb6.portfolio.universitycrm.entity.Student;
+import com.phoenixgb6.portfolio.universitycrm.exception.BadRequestException;
+import com.phoenixgb6.portfolio.universitycrm.exception.NotFoundException;
 import com.phoenixgb6.portfolio.universitycrm.service.ServiceS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -40,7 +44,16 @@ public class StudentController {
             totalPages++;
         }
 
-        List<Student> studentsList = studentService.findAll(pageNumber, pageSize, order, search);
+        List<Student> studentsList;
+
+        try{
+            studentsList = studentService.findAll(pageNumber, pageSize, order, search);
+        }
+        catch (Exception ex){
+            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("type", 's');
+            throw new BadRequestException("Your browser sent a request that this server could not understand", model);
+        }
 
         model.addAttribute("paSi", pageSize);
         model.addAttribute("totalPages", totalPages);
@@ -56,29 +69,47 @@ public class StudentController {
     @GetMapping("/{id}")
     public String getStudent(Model model, @PathVariable int id){
 
-        model.addAttribute("individual", studentService.findById(id));
+        Student student;
+
+        try{
+            student = studentService.findById(id);
+        }
+        catch (Exception ex){
+            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("type", 's');
+            throw new NotFoundException("Student ID not found  -  " + id, model);
+        }
+
+        model.addAttribute("individual", student);
         model.addAttribute("staff", false);
 
         return "/universitycrm/individual-profile";
     }
 
     @PostMapping("/save")
-    public String saveEmployee(@ModelAttribute("individual") Student student) {
+    public String saveStudent(@ModelAttribute("individual") @Valid Student student, BindingResult bindingResult, Model model) {
 
-        // save the employee
-        studentService.save(student);
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("staff", false);
+            return "universitycrm/individual-form";
+        }
 
-        // use a redirect to prevent duplicate submissions
-        return "redirect:/students/list";
+        else{
+            // save the student
+            studentService.save(student);
+
+            // use a redirect to prevent duplicate submissions
+            return "redirect:/students/list";
+        }
     }
 
     @GetMapping("/delete")
     public String delete(@RequestParam("individualId") int id) {
 
-        // delete the employee
+        // delete the student
         studentService.deleteById(id);
 
-        // redirect to /employees/list
+        // redirect to /students/list
         return "redirect:/students/list";
 
     }
@@ -91,7 +122,6 @@ public class StudentController {
 
         model.addAttribute("individual", student);
         model.addAttribute("staff", false);
-
 
         return "universitycrm/individual-form";
     }
@@ -109,27 +139,21 @@ public class StudentController {
     }
 
     @GetMapping("/dropCourse")
-    public String dropCourse(@RequestParam("studentId") int studentId,
-                            @RequestParam("courseId") int courseId){
+    public String dropCourse(@RequestParam("sid") int studentId,
+                            @RequestParam("cid") int courseId, Model model){
 
-        Student student = studentService.findById(studentId);
-
-        //Drop course without helper class
-//        List<Course> courseList = student.getCourses();
-//
-//        for(int i = 0; i < courseList.size(); i++){
-//            if(courseList.get(i).getId() == courseId){
-//                courseList.remove(i);
-//                break;
-//            }
-//        }
-//
-//        student.setCourses(courseList);
-
-        student.dropCourse(courseService.findById(courseId));
-
-        studentService.save(student);
+        try{
+            Student student = studentService.findById(studentId);
+            student.dropCourse(courseService.findById(courseId));
+            studentService.save(student);
+        }
+        catch (Exception ex){
+            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("type", 's');
+            throw new NotFoundException("Student or course not found", model);
+        }
 
         return "redirect:/students/" + studentId;
     }
+
 }

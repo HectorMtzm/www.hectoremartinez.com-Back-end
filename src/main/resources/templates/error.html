@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:if="${project == 'univeritycrm'}" th:remove="tag">
+    <div th:insert="projects-error-template/universitycrm-template.html :: div" th:remove="tag"></div>
+</div>
+
+<div th:if="${project == 'main'}" th:remove="tag">
+    <div th:insert="projects-error-template/universitycrm-template.html :: div" th:remove="tag"></div>
+</div>
+
+<div th:if="${project == 'sudoku'}" th:remove="tag">
+    <div th:insert="projects-error-template/universitycrm-template.html :: div" th:remove="tag"></div>
+</div>
+
+</html>

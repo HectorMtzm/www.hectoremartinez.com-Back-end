@@ -1,0 +1,40 @@
+<div th:fragment="universitycrm" th:remove="tag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/style.css}">
+    <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
+    <title>Not Found</title>
+</head>
+
+<body>
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
+            <ul>
+                <li><a th:classappend="${type} == 's' ? 'current'" th:href="@{/students/list}">Students</a></li>
+                <li><a th:classappend="${type} == 'i' ? 'current'" th:href="@{/instructors/list}">Instructors</a></li>
+                <li><a th:classappend="${type} == 'c' ? 'current'" th:href="@{/courses/list}">Courses</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container center">
+    <h1 th:text="${message}"></h1>
+
+    <i th:if="${errorCode} == 404" class="far fa-frown fa-10x"></i>
+    <i th:if="${errorCode} == 400" class="far fa-times-circle fa-10x"></i>
+
+    <div>
+        <a class="btn btn-primary" th:if="${type} == 's'" th:href="@{/students/list}"><i class="fas fa-chevron-left"></i>&nbsp; Students List</a>
+        <a class="btn btn-primary" th:if="${type} == 'i'" th:href="@{/instructors/list}"><i class="fas fa-chevron-left"></i>&nbsp; Instructors List</a>
+        <a class="btn btn-primary" th:if="${type} == 'c'" th:href="@{/courses/list}"><i class="fas fa-chevron-left"></i>&nbsp; Courses List</a>
+    </div>
+</div>
+
+</body>
+</div>
