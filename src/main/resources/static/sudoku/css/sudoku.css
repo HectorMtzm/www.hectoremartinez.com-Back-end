@@ -30,8 +30,11 @@ a {
 }
 
 .btn-primary {
-  color: #fff;
   background: #28a745;
+}
+
+.btn-negative{
+  background-color: red;
 }
 
 /* --------------------Sudoku-------------------- */

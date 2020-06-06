@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/students")
+@RequestMapping("/portfolio/universitycrm/students")
 public class StudentController {
 
     ServiceS<Student> studentService;
@@ -50,7 +50,7 @@ public class StudentController {
             studentsList = studentService.findAll(pageNumber, pageSize, order, search);
         }
         catch (Exception ex){
-            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("project", "universitycrm");
             model.addAttribute("type", 's');
             throw new BadRequestException("Your browser sent a request that this server could not understand", model);
         }
@@ -67,7 +67,7 @@ public class StudentController {
     }
 
     @GetMapping("/{id}")
-    public String getStudent(Model model, @PathVariable int id){
+    public String getStudent(Model model, @PathVariable("id") int id){
 
         Student student;
 
@@ -75,13 +75,14 @@ public class StudentController {
             student = studentService.findById(id);
         }
         catch (Exception ex){
-            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("project", "universitycrm");
             model.addAttribute("type", 's');
             throw new NotFoundException("Student ID not found  -  " + id, model);
         }
 
         model.addAttribute("individual", student);
         model.addAttribute("staff", false);
+        model.addAttribute("cid", null);
 
         return "/universitycrm/individual-profile";
     }
@@ -99,18 +100,24 @@ public class StudentController {
             studentService.save(student);
 
             // use a redirect to prevent duplicate submissions
-            return "redirect:/students/list";
+            return "redirect:/portfolio/universitycrm/students/list";
         }
     }
 
     @GetMapping("/delete")
-    public String delete(@RequestParam("individualId") int id) {
+    public String delete(@RequestParam("individualId") int id, Model model) {
 
-        // delete the student
-        studentService.deleteById(id);
+        try {
+            // delete the student
+            studentService.deleteById(id);
+        } catch (Exception ex) {
+            model.addAttribute("project", "universitycrm");
+            model.addAttribute("type", 's');
+            throw new NotFoundException("Student not found - ID: " + id, model);
+        }
 
         // redirect to /students/list
-        return "redirect:/students/list";
+        return "redirect:/portfolio/universitycrm/students/list";
 
     }
 
@@ -148,12 +155,51 @@ public class StudentController {
             studentService.save(student);
         }
         catch (Exception ex){
-            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("project", "universitycrm");
             model.addAttribute("type", 's');
             throw new NotFoundException("Student or course not found", model);
         }
 
-        return "redirect:/students/" + studentId;
+        return "redirect:/portfolio/universitycrm/students/" + studentId;
+    }
+
+    @PostMapping("/saveCourse")
+    public String saveCourse(@RequestParam("sid") int studentId, @RequestParam("cid") int courseId, Model model){
+
+        Student student = studentService.findById(studentId);
+
+        try{
+            student.addCourse(courseService.findById(courseId));
+            studentService.save(student);
+        } catch (Exception ex){
+            model.addAttribute("project", "universitycrm");
+            model.addAttribute("type", 's');
+            throw new NotFoundException("Course ID not found - " + courseId, model);
+        }
+
+        return "redirect:/portfolio/universitycrm/students/" + studentId;
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -105,6 +105,9 @@ public class Student {
         if(courses != null){
             courses.remove(tempCourse);
         }
-        tempCourse.setInstructor(null);
+    }
+
+    public void addCourse(Course course){
+        courses.add(course);
     }
 }

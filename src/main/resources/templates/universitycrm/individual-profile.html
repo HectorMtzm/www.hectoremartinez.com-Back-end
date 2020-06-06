@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/style.css}">
     <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/universitycrm/js/utilities.js}" defer></script>
     <title th:text="${individual.firstName + ' ' + individual.lastName}"></title>
 </head>
 
@@ -18,16 +19,16 @@
             <div class="container">
                 <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
                 <ul>
-                    <li><a th:classappend="${!staff} ? 'current'" th:href="@{/students/list}">Students</a></li>
-                    <li><a th:classappend="${staff} ? 'current'" th:href="@{/instructors/list}">Instructors</a></li>
-                    <li><a th:href="@{/courses/list}">Courses</a></li>
+                    <li><a th:classappend="${!staff} ? 'current'" th:href="@{/portfolio/universitycrm/students/list}">Students</a></li>
+                    <li><a th:classappend="${staff} ? 'current'" th:href="@{/portfolio/universitycrm/instructors/list}">Instructors</a></li>
+                    <li><a th:href="@{/portfolio/universitycrm/courses/list}">Courses</a></li>
                 </ul>
             </div>
         </nav>
     </header>
     <main>
         <div class="container">
-            <a class="btn btn-primary" th:href="${staff} ? @{/instructors/list} : @{/students/list}"><i class="fas fa-chevron-left"></i> <span th:text="${staff} ? 'Instructors List' : 'Students List'"/></a>
+            <a class="btn btn-primary" th:href="${staff} ? @{/portfolio/universitycrm/instructors/list} : @{/portfolio/universitycrm/students/list}"><i class="fas fa-chevron-left"></i> <span th:text="${staff} ? 'Instructors List' : 'Students List'"/></a>
             <div class="profile">
                 <div class="userInfo">
                     <div class="basicInfo">
@@ -62,14 +63,14 @@
                         </div>
                     </div>
                     <div th:if="${staff}">
-                        <a class="btn btn-negative" th:href="@{/instructors/delete(individualId=${individual.id})}"
+                        <a class="btn btn-negative" th:href="@{/portfolio/universitycrm/instructors/delete(individualId=${individual.id})}"
                            onclick="if(!(confirm('Are you sure you want to delete this instructor?'))) return false">Delete</a>
-                        <a class="btn btn-neutro" th:href="@{/instructors/updateForm(individualId=${individual.id})}">Update</a>
+                        <a class="btn btn-neutro" th:href="@{/portfolio/universitycrm/instructors/updateForm(individualId=${individual.id})}">Update</a>
                     </div>
                     <div th:unless="${staff}">
-                        <a class="btn btn-negative" th:href="@{/students/delete(individualId=${individual.id})}"
+                        <a class="btn btn-negative" th:href="@{/portfolio/universitycrm/students/delete(individualId=${individual.id})}"
                            onclick="if(!(confirm('Are you sure you want to delete this student?'))) return false">Delete</a>
-                        <a class="btn btn-neutro" th:href="@{/students/updateForm(individualId=${individual.id})}">Update</a>
+                        <a class="btn btn-neutro" th:href="@{/portfolio/universitycrm/students/updateForm(individualId=${individual.id})}">Update</a>
                     </div>
                 </div>
 
@@ -88,35 +89,51 @@
                         </thead>
                         <tbody>
                             <tr th:each="tempCourse : ${individual.courses}">
-                                <td><a th:text="${tempCourse.id}" th:href="@{/courses/{id}(id=${tempCourse.id})}"></a>
+                                <td><a th:text="${tempCourse.id}" th:href="@{/portfolio/universitycrm/courses/{id}(id=${tempCourse.id})}"></a>
                                 </td>
                                 <td th:text="${tempCourse.prefix + ' ' + tempCourse.number}"></td>
                                 <td th:text="${tempCourse.title}"></td>
                                 <div th:if="${!staff}">
-                                    <td> <a th:href="@{../instructors/{id}(id=${tempCourse.instructor.id})}" th:text="${tempCourse.instructor.firstName + ' ' + tempCourse.instructor.lastName}"></a> </td>
+                                    <td> <a th:href="${tempCourse.instructor != null} ? @{../instructors/{id}(id=${tempCourse.instructor.id})}" th:text="${tempCourse.instructor != null} ? ${tempCourse.instructor.firstName + ' ' + tempCourse.instructor.lastName} : 'Not Assigned'"></a> </td>
                                 </div>
                                 <td th:if="${!staff}">
-                                    <a th:href="@{/students/dropCourse(cid=${tempCourse.id}, sid=${individual.id})}"
+                                    <a th:href="@{/portfolio/universitycrm/students/dropCourse(cid=${tempCourse.id}, sid=${individual.id})}"
                                         onclick="if(!(confirm('Are you sure you want to drop this class?'))) return false">Drop</a>
                                 </td>
                                 <td th:unless="${!staff}">
-                                    <a th:href="@{/instructors/removeCourse(courseId=${tempCourse.id}, instructorId=${individual.id})}"
+                                    <a th:href="@{/portfolio/universitycrm/instructors/removeCourse(cid=${tempCourse.id}, iid=${individual.id})}"
                                        onclick="if(!(confirm('Are you sure you want to remove this class?'))) return false">Remove</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <button th:if="${#lists.size(individual.courses) != 0 && !staff}" class="btn btn-primary" onclick="displayForm('c')">Add Course</button>
                     <div class="empty-table" th:unless="${#lists.size(individual.courses) > 0}">
                         <h3>This <span th:text="${staff} ? 'instructor' : 'student'"></span> is not <span th:text="${staff} ? 'teaching' : 'enrolled in'"></span> any class</h3>
+                        <button th:if="${!staff}" class="btn btn-primary" onclick="displayForm('c')">Add a Course</button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
+
+    <div th:if="${!staff}" id="addCourse" class="overlay">
+        <div class="wrap">
+            <form id="course-form" th:action="@{/portfolio/universitycrm/students/saveCourse}" method="post">
+                <input type="text" name="sid" th:value="${individual.id}" hidden/>
+                <label>Course ID:</label>
+                <input id="courseIdInput" name="cid" th:value="${cid}" placeholder="ID" autocomplete="off"/>
+            </form>
+            <div>
+                <button class="btn-primary btn" type="submit" form="course-form" onclick="return validateAddTextField('c')">Submit</button>
+                <button class="btn btn-negative" onclick="hideForm('addCourse')">Cancel</button>
+            </div>
+        </div>
+    </div>
     <footer>
 
     </footer>
-    <script type="text/javascript" th:src="@{/universitycrm/js/utilities.js}"></script>
+
 
 </body>
 </html>

@@ -15,14 +15,6 @@ public class SudokuBoard {
         this.boardLength = board.length;
     }
 
-    public Integer[][] getBoard() {
-        return board;
-    }
-
-    public int getBoardLength() {
-        return boardLength;
-    }
-
     // Recursively traverse the board brute forcing values.
     public boolean solve(Integer[][] board, int boardLength) {
 
@@ -145,5 +137,13 @@ public class SudokuBoard {
                     board[row][col] = 0;
             }
         }
+    }
+
+    public Integer[][] getBoard() {
+        return board;
+    }
+
+    public int getBoardLength() {
+        return boardLength;
     }
 }

@@ -18,9 +18,9 @@
         <div class="container">
             <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
             <ul>
-                <li><a th:href="@{/students/list}">Students</a></li>
-                <li><a th:href="@{/instructors/list}">Instructors</a></li>
-                <li><a class="current" th:href="@{/courses/list}">Courses</a></li>
+                <li><a th:href="@{/portfolio/universitycrm/students/list}">Students</a></li>
+                <li><a th:href="@{/portfolio/universitycrm/instructors/list}">Instructors</a></li>
+                <li><a class="current" th:href="@{/portfolio/universitycrm/courses/list}">Courses</a></li>
             </ul>
         </div>
     </nav>
@@ -30,7 +30,7 @@
     <div class="form-container">
         <h3>Course Directory</h3>
 
-        <form action="#" th:action="@{/courses/save}" th:object="${course}" method="POST" autocomplete="off">
+        <form action="#" th:action="@{/portfolio/universitycrm/courses/save}" th:object="${course}" method="POST" autocomplete="off">
 
             <!-- Add hidden form field to handle update -->
             <input type="hidden" th:field="*{id}" />
@@ -70,12 +70,12 @@
             </div>
             <div class="form-frag input-container">
                 <label>Instructor:</label>
-                <select name="instructorId">
+                <select name="iid">
                     <option value="0" th:text="--"></option>
                     <option th:each="tempInstructor : ${instructorList}"
                             th:text="${tempInstructor.id} + '. ' + ${tempInstructor.firstName} + ' ' + ${tempInstructor.lastName}"
                             th:value="${tempInstructor.id}"
-                            th:selected="${tempInstructor.id == instructorId}"></option>
+                            th:selected="${tempInstructor.id == iid}"></option>
                 </select>
             </div>
             <button class="btn btn-primary" type="submit">Save</button>

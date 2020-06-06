@@ -15,7 +15,7 @@
             <p th:case="'1'" class="invalid">This board is impossible to solve!</p>
             <p th:case="'2'" class="invalid">Invalid board. </p>
         </div>
-        <form action="#" th:action="@{/sudoku/home}" th:object="${sudokuBoard}" autocomplete="off" method="post">
+        <form action="#" th:action="@{/portfolio/sudoku/}" th:object="${sudokuBoard}" autocomplete="off" method="post">
             <table class="puzzle-grid">
                 <tbody>
                     <tr class="top-box-borders side-box-borders">
@@ -120,8 +120,8 @@
                 </tbody>
             </table>
             <div class="buttons">
-                <button class="btn btn-primary" onclick="validate()" type="submit">Solve!</button>
-                <button class="btn btn-primary" onclick="clearBoard();return false;">Reset</button>
+                <button class="btn btn-primary" onclick="validateAddTextField()" type="submit">Solve!</button>
+                <button class="btn btn-negative" onclick="clearBoard();return false;">Reset</button>
             </div>
         </form>
     </div>

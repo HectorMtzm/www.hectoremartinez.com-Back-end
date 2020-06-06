@@ -101,6 +101,42 @@ function assignId(){
     return true;
 }
 
+function displayForm(form){
+    if(form == 'r'){
+        document.getElementById("addReview").style.display = "block";
+        document.getElementById("reviewInput").focus();
+    }
+    else if (form == 's'){
+        document.getElementById("addStudent").style.display = "block";
+        document.getElementById("studentIdInput").focus();
+    }
+    else if(form == 'c'){
+        document.getElementById("addCourse").style.display = "block";
+        document.getElementById("courseIdInput").focus();
+    }
+
+}
+
+function hideForm(form){
+        document.getElementById(form).style.display = "none";
+}
+
+function validateAddTextField(type) {
+    if(type == 's' || type == 'c'){
+        const input = document.getElementById("studentIdInput").value;
+        if(input == "" || input < 1){
+            return false
+        }
+    }
+    else if(type == 'addReview'){
+        const input = document.getElementById("reviewInput").value;
+        if(input == ""){
+            return false
+        }
+    }
+    return true;
+}
+
 formatDocument();
 
 
