@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/instructors")
+@RequestMapping("/portfolio/universitycrm/instructors")
 public class InstructorController {
 
     ServiceS<Instructor> instructorService;
@@ -49,7 +49,7 @@ public class InstructorController {
             instructorsList = instructorService.findAll(pageNumber, pageSize, order, search);
         }
         catch (Exception ex){
-            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("project", "universitycrm");
             model.addAttribute("type", 'i');
             throw new BadRequestException("Your browser sent a request that this server could not understand", model);
         }
@@ -74,7 +74,7 @@ public class InstructorController {
             instructor = instructorService.findById(id);
         }
         catch (Exception ex){
-            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("project", "universitycrm");
             model.addAttribute("type", 'i');
             throw new NotFoundException("Instructor ID not found  -  " + id, model);
         }
@@ -97,7 +97,7 @@ public class InstructorController {
             instructorService.save(instructor);
 
             // use a redirect to prevent duplicate submissions
-            return "redirect:/students/list";
+            return "redirect:/portfolio/universitycrm/instructors/list";
         }
     }
 
@@ -120,7 +120,7 @@ public class InstructorController {
         instructorService.deleteById(id);
 
         // redirect to /instructors/list
-        return "redirect:/instructors/list";
+        return "redirect:/portfolio/universitycrm/instructors/list";
 
     }
 
@@ -150,8 +150,8 @@ public class InstructorController {
     }
 
     @GetMapping("/removeCourse")
-    public String removeCourse(@RequestParam("courseId") int courseId,
-                               @RequestParam("instructorId") int instructorId, Model model){
+    public String removeCourse(@RequestParam("cid") int courseId,
+                               @RequestParam("iid") int instructorId, Model model){
 
         try{
         Instructor instructor = instructorService.findById(instructorId);
@@ -159,11 +159,11 @@ public class InstructorController {
 
         instructorService.save(instructor);
         }catch (Exception ex){
-            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("project", "universitycrm");
             model.addAttribute("type", 'i');
             throw new NotFoundException("Instructor or course not found", model);
         }
 
-        return "redirect:/instructors/" + instructorId;
+        return "redirect:/portfolio/universitycrm/instructors/" + instructorId;
     }
 }

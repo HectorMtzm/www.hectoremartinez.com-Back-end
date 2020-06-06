@@ -64,6 +64,8 @@ input:focus{
     max-width: 900px;
     overflow: auto;
     padding: 0 20px;
+    background-color: #fff;
+    border-radius: 10px;
 }
 
 .form-container {
@@ -179,11 +181,6 @@ input:focus{
 
 .tabs-nav{
     margin-bottom: 20px;
-}
-
-.small-container{
-    background-color: #fff;
-    border-radius: 10px;
 }
 
 .overlay {
@@ -331,8 +328,8 @@ input:focus{
 
 .small-container > h1{
     text-align: center;
+    margin-top: 0;
     margin-bottom: 20px;
-    padding-top: 20px;
 }
 
 /*---------------------Tables---------------------*/

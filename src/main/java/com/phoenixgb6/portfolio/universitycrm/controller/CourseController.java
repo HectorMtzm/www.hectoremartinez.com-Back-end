@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/courses")
+@RequestMapping("portfolio/universitycrm/courses")
 public class CourseController {
     ServiceS<Course> courseService;
     ServiceS<Instructor> instructorService;
@@ -57,7 +57,7 @@ public class CourseController {
             coursesList = courseService.findAll(pageNumber, pageSize, order, search);
         }
         catch (Exception ex){
-            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("project", "universitycrm");
             model.addAttribute("type", 'c');
             throw new BadRequestException("Your browser sent a request that this server could not understand", model);
         }
@@ -74,29 +74,28 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public String getCourse(Model model, @PathVariable int id){
+    public String getCourse(Model model, @PathVariable("id") int id){
 
         Course course;
         try{
             course = courseService.findById(id);
         }
         catch (Exception ex){
-            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("project", "universitycrm");
             model.addAttribute("type", 'c');
             throw new NotFoundException("Course ID not found  -  " + id, model);
         }
 
         model.addAttribute("course", course);
         model.addAttribute("review", new Review());
-        model.addAttribute("courseId", id);
-        model.addAttribute("studentId",null);
+        model.addAttribute("sid",null);
 
         return "/universitycrm/course-info";
     }
 
     @PostMapping("/save")
     public String saveCourse(@ModelAttribute("course") @Valid Course course, BindingResult bindingResult,
-                               @RequestParam("instructorId") int instructorId, Model model) {
+                               @RequestParam("iid") int instructorId, Model model) {
 
         if(bindingResult.hasErrors()) {
             List<Instructor> instructorList = instructorService.findAll();
@@ -117,25 +116,25 @@ public class CourseController {
             courseService.save(course);
 
             // use a redirect to prevent duplicate submissions
-            return "redirect:/courses/list";
+            return "redirect:/portfolio/universitycrm/courses/list";
         }
     }
 
     @GetMapping("/delete")
-    public String delete(@RequestParam("courseId") int id, Model model) {
+    public String delete(@RequestParam("cid") int id, Model model) {
 
         // delete the course
         try{
             courseService.deleteById(id);
         }
         catch (Exception ex){
-            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("project", "universitycrm");
             model.addAttribute("type", 'c');
             throw new NotFoundException("Course ID not found  -  " + id, model);
         }
 
         // redirect to /courses/list
-        return "redirect:/courses/list";
+        return "redirect:/portfolio/universitycrm/courses/list";
     }
 
     @GetMapping("/addForm")
@@ -147,13 +146,13 @@ public class CourseController {
 
         model.addAttribute("course", course);
         model.addAttribute("instructorList", instructorList);
-        model.addAttribute("instructorId", 0);
+        model.addAttribute("iid", 0);
 
         return "universitycrm/course-form";
     }
 
     @GetMapping("/updateForm")
-    public String updateForm(@RequestParam("courseId") int id, Model model, Integer instructorId) {
+    public String updateForm(@RequestParam("cid") int id, Model model, Integer instructorId) {
 
         Course course = courseService.findById(id);
         List<Instructor> instructorList = instructorService.findAll();
@@ -165,7 +164,7 @@ public class CourseController {
 
         model.addAttribute("course", course);
         model.addAttribute("instructorList", instructorList);
-        model.addAttribute("instructorId", instructorId);
+        model.addAttribute("iid", instructorId);
 
         // send over to our form
         return "universitycrm/course-form";
@@ -178,11 +177,11 @@ public class CourseController {
         course.addReview(review);
         courseService.save(course);
 
-        return "redirect:/courses/" + course.getId();
+        return "redirect:/portfolio/universitycrm/courses/" + course.getId();
     }
 
     @PostMapping("/saveStudent")
-    public String saveStudent(@RequestParam("studentId") int studentId, @RequestParam("courseId") int courseId, Model model){
+    public String saveStudent(@RequestParam("sid") int studentId, @RequestParam("cid") int courseId, Model model){
 
         Course course = courseService.findById(courseId);
 
@@ -191,30 +190,30 @@ public class CourseController {
             courseService.save(course);
         }
         catch (Exception ex){
-            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("project", "universitycrm");
             model.addAttribute("type", 'c');
             throw new NotFoundException("Student ID not found  -  " + studentId, model);
         }
 
 
-        return "redirect:/courses/" + courseId;
+        return "redirect:/portfolio/universitycrm/courses/" + courseId;
     }
 
     @GetMapping("/deleteStudent")
     public String deleteStudent(@RequestParam("sid") int studentId, @RequestParam("cid") int courseId, Model model){
 
+        Course course = courseService.findById(courseId);
 
         try{
-            Course course = courseService.findById(courseId);
             course.removeStudent(studentService.findById(studentId));
             courseService.save(course);
         }
         catch (Exception ex){
-            model.addAttribute("project", "univeritycrm");
+            model.addAttribute("project", "universitycrm");
             model.addAttribute("type", 'c');
             throw new NotFoundException("Student or course not found", model);
         }
 
-        return "redirect:/courses/" + courseId;
+        return "redirect:/portfolio/universitycrm/courses/" + courseId;
     }
 }

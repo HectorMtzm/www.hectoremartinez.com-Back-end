@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.*;
 import java.net.BindException;
 
 @Controller
-@RequestMapping("/sudoku")
+@RequestMapping("/portfolio/sudoku")
 public class SudokuController {
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String home(Model model) {
         model.addAttribute(new SudokuBoard());
         return "sudoku/home";
     }
 
-    @PostMapping("/home")
+    @PostMapping("/")
     public String solveSudoku(Model model, @ModelAttribute("sudokuBoard") SudokuBoard sudokuBoard){
 
         // sets the letters and special characters to 0 to avoid an NullPointerException and then validates the

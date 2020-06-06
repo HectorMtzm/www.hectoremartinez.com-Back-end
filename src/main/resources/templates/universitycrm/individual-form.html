@@ -18,9 +18,9 @@
         <div class="container">
             <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
             <ul>
-                <li><a th:classappend="${!staff} ? 'current'" th:href="@{/students/list}">Students</a></li>
-                <li><a th:classappend="${staff} ? 'current'" th:href="@{/instructors/list}">Instructors</a></li>
-                <li><a th:href="@{/courses/list}">Courses</a></li>
+                <li><a th:classappend="${!staff} ? 'current'" th:href="@{/portfolio/universitycrm/students/list}">Students</a></li>
+                <li><a th:classappend="${staff} ? 'current'" th:href="@{/portfolio/universitycrm/instructors/list}">Instructors</a></li>
+                <li><a th:href="@{/portfolio/universitycrm/courses/list}">Courses</a></li>
             </ul>
         </div>
     </nav>
@@ -30,7 +30,7 @@
     <div class="form-container">
         <h3 th:text="${staff} ? 'Instructor Directory' : 'Student Directory'"></h3>
 
-        <form action="#" th:action="${staff} ? @{/instructors/save} : @{/students/save}" th:object="${individual}" method="POST" autocomplete="off">
+        <form action="#" th:action="${staff} ? @{/portfolio/universitycrm/instructors/save} : @{/portfolio/universitycrm/students/save}" th:object="${individual}" method="POST" autocomplete="off">
 
             <!-- Add hidden form field to handle update -->
             <input type="hidden" th:field="*{id}" />
