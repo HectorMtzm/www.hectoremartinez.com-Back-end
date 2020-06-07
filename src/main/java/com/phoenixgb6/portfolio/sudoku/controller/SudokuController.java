@@ -23,7 +23,7 @@ public class SudokuController {
     }
 
     @PostMapping("/")
-    public String solveSudoku(Model model, @ModelAttribute("sudokuBoard") SudokuBoard sudokuBoard){
+    public String solveSudoku(@ModelAttribute("sudokuBoard") SudokuBoard sudokuBoard, Model model){
 
         // sets the letters and special characters to 0 to avoid an NullPointerException and then validates the
         // user input to make sure the board is valid before starting backtracking.

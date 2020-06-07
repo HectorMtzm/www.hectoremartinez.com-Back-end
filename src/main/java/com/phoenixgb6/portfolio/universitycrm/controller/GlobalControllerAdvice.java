@@ -26,7 +26,7 @@ public class GlobalControllerAdvice {
 
     //Exception handler for Not found - 404
     @ExceptionHandler(NotFoundException.class)
-    public ModelAndView notFoundHandler(HttpServletRequest req, NotFoundException ex) {
+    public ModelAndView notFoundHandler(NotFoundException ex) {
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("error");
@@ -39,7 +39,7 @@ public class GlobalControllerAdvice {
 
     //Exception handler for Not found - 400
     @ExceptionHandler(BadRequestException.class)
-    public ModelAndView badRequestHandler(HttpServletRequest req, BadRequestException ex) {
+    public ModelAndView badRequestHandler(BadRequestException ex) {
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("error");
