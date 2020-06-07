@@ -98,23 +98,18 @@ public class Instructor {
     }
 
     // Convenience methods for bi-directional relationship
-    public void addCourse(Course tempCourse) {
-
+    public void addCourse(Course course) {
         if (courses == null) {
             courses = new ArrayList<>();
         }
-
-        courses.add(tempCourse);
-        tempCourse.setInstructor(this);
+        courses.add(course);
+        course.setInstructor(this);
     }
 
-    public void removeCourse(Course tempCourse){
-
+    public void removeCourse(Course course){
         if(courses != null){
-            courses.remove(tempCourse);
+            courses.remove(course);
         }
-
-        tempCourse.setInstructor(null);
-
+        course.setInstructor(null);
     }
 }

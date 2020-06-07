@@ -111,7 +111,7 @@
 
 <div id="addReview" class="overlay">
     <div class="wrap">
-        <form id="review-form" th:action="@{/portfolio/universitycrm/courses/saveReview}" th:object="${review}" method="post">
+        <form id="review-form" th:action="@{/portfolio/universitycrm/courses/} + ${course.id} + @{/saveReview}" th:object="${review}" method="post">
             <input type="text" th:field="*{id}" hidden/>
             <input type="text" name="courseId" th:value="${course.id}" hidden/>
             <label>Review:</label>
@@ -126,7 +126,7 @@
 
 <div id="addStudent" class="overlay">
     <div class="wrap">
-        <form id="student-form" th:action="@{/portfolio/universitycrm/courses/saveStudent}" method="post">
+        <form id="student-form" th:action="@{/portfolio/universitycrm/courses/} + ${course.id} + @{/saveStudent}" method="post">
             <input type="text" name="cid" th:value="${course.id}" hidden/>
             <label>Student ID:</label>
             <input id="studentIdInput" name="sid" th:value="${sid}" placeholder="ID" autocomplete="off"/>

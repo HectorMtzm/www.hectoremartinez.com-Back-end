@@ -14,9 +14,6 @@ public class Review {
     @Column(name="comment")
     private String comment;
 
-    @Column(name="course_id")
-    private int courseId;
-
     public Review() {
 
     }
@@ -39,14 +36,6 @@ public class Review {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(int course_id) {
-        this.courseId = course_id;
     }
 
     @Override

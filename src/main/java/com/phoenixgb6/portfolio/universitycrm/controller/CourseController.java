@@ -170,17 +170,17 @@ public class CourseController {
         return "universitycrm/course-form";
     }
 
-    @PostMapping("/saveReview")
-    public String saveReview(@ModelAttribute("review") Review review){
+    @PostMapping("/{courseId}/saveReview")
+    public String saveReview(@ModelAttribute("review") Review review, @PathVariable int courseId){
 
-        Course course = courseService.findById(review.getCourseId());
+        Course course = courseService.findById(courseId);
         course.addReview(review);
         courseService.save(course);
 
         return "redirect:/portfolio/universitycrm/courses/" + course.getId();
     }
 
-    @PostMapping("/saveStudent")
+    @PostMapping("/{studentId}/saveStudent")
     public String saveStudent(@RequestParam("sid") int studentId, @RequestParam("cid") int courseId, Model model){
 
         Course course = courseService.findById(courseId);

@@ -36,7 +36,7 @@ public class Course {
     @JoinColumn(name="instructor_id")
     private Instructor instructor;
 
-    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     @JoinColumn(name="course_id")
     private List<Review> reviews;
 
@@ -139,13 +139,13 @@ public class Course {
     }
 
     // Convenience method
-    public void addReview(Review theReview) {
+    public void addReview(Review review) {
 
         if (reviews == null) {
             reviews = new ArrayList<>();
         }
 
-        reviews.add(theReview);
+        reviews.add(review);
     }
 
     @Override
