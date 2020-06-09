@@ -81,7 +81,7 @@ public class InstructorController {
         model.addAttribute("individual", instructor);
         model.addAttribute("staff", true);
 
-        return "/universitycrm/individual-profile";
+        return "universitycrm/individual-profile";
     }
 
     @PostMapping("/save")

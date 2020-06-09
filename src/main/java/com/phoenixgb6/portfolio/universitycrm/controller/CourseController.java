@@ -90,7 +90,7 @@ public class CourseController {
         model.addAttribute("review", new Review());
         model.addAttribute("sid",null);
 
-        return "/universitycrm/course-info";
+        return "universitycrm/course-info";
     }
 
     @PostMapping("/save")

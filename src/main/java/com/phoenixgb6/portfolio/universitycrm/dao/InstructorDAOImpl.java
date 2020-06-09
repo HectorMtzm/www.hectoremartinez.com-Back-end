@@ -97,11 +97,6 @@ public class InstructorDAOImpl implements DAO<Instructor>{
     public void deleteById(int id) {
         Session session = entityManager.unwrap(Session.class);
 
-//        Query query = session.createQuery("delete from Instructor where id=:id");
-//        query.setParameter("id",id);
-//
-//        query.executeUpdate();
-
         Instructor instructor = session.get(Instructor.class, id);
         session.delete(instructor);
     }

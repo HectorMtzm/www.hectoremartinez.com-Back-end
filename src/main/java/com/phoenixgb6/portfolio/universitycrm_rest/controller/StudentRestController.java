@@ -4,17 +4,18 @@ import com.phoenixgb6.portfolio.universitycrm.entity.Course;
 import com.phoenixgb6.portfolio.universitycrm.entity.Student;
 import com.phoenixgb6.portfolio.universitycrm_rest.dao.CourseRepository;
 import com.phoenixgb6.portfolio.universitycrm_rest.dao.StudentRepository;
+import com.phoenixgb6.portfolio.universitycrm_rest.exception.AlreadyExistExceptionRest;
+import com.phoenixgb6.portfolio.universitycrm_rest.exception.NotFoundExceptionRest;
 import com.phoenixgb6.portfolio.universitycrm_rest.utilityentity.idObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-@RestController
 @RepositoryRestController
+@RequestMapping("/")
 public class StudentRestController {
 
     StudentRepository studentRepository;
@@ -26,25 +27,33 @@ public class StudentRestController {
         this.courseRepository = courseRepository;
     }
 
-    @PostMapping("/portfolio/universitycrm/api/students/{sid}/courses")
-    public Student addCourse(@PathVariable("sid") int studentId, @RequestBody idObject object){
-        Optional<Student> opStudent = studentRepository.findById(studentId);
+    @ResponseStatus(value = HttpStatus.CREATED)
+    @PostMapping("/students/{sid}/courses")
+    public void addCourse(@PathVariable("sid") int studentId, @RequestBody idObject object){
 
-        Student student = opStudent.get();
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new NotFoundExceptionRest("Student ID not found - " + studentId));
+        Course course = courseRepository.findById(object.getId()).orElseThrow(() -> new NotFoundExceptionRest("Course ID not found - " + object.getId()));
 
-        List<Course> courses = student.getCourses();
-
-        if(courses == null){
-            courses = new ArrayList<>();
+        try{
+            student.addCourse(course);
+            studentRepository.save(student);
+        } catch (DataIntegrityViolationException ex){
+            throw new AlreadyExistExceptionRest("The student is already registered in course with ID " + object.getId());
         }
-
-        Optional<Course> course = courseRepository.findById(object.getId());
-
-        student.addCourse(course.get());
-
-        studentRepository.save(student);
-
-        return student;
-
     }
+
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @DeleteMapping("/students/{sid}/courses")
+    public void dropCourse(@PathVariable("sid") int studentId, @RequestBody idObject object){
+
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new NotFoundExceptionRest("Student ID not found - " + studentId));
+        Course course = courseRepository.findById(object.getId()).orElseThrow(() -> new NotFoundExceptionRest("Course ID not found - " + object.getId()));
+
+        if(!student.dropCourse(course)){
+            throw new NotFoundExceptionRest("Student with ID " + studentId + " is not enrolled in course with ID " + object.getId());
+        }
+        studentRepository.save(student);
+    }
+
+
 }

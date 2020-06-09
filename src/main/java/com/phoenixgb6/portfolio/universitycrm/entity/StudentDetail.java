@@ -1,5 +1,6 @@
 package com.phoenixgb6.portfolio.universitycrm.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;

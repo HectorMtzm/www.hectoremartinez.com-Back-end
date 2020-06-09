@@ -84,7 +84,7 @@ public class StudentController {
         model.addAttribute("staff", false);
         model.addAttribute("cid", null);
 
-        return "/universitycrm/individual-profile";
+        return "universitycrm/individual-profile";
     }
 
     @PostMapping("/save")
@@ -163,8 +163,8 @@ public class StudentController {
         return "redirect:/portfolio/universitycrm/students/" + studentId;
     }
 
-    @PostMapping("/saveCourse")
-    public String saveCourse(@RequestParam("sid") int studentId, @RequestParam("cid") int courseId, Model model){
+    @PostMapping("{studentId}/saveCourse")
+    public String saveCourse(@PathVariable int studentId, @RequestParam("cid") int courseId, Model model){
 
         Student student = studentService.findById(studentId);
 

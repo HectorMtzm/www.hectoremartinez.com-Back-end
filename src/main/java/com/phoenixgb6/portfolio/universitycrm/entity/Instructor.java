@@ -1,5 +1,8 @@
 package com.phoenixgb6.portfolio.universitycrm.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -99,6 +102,7 @@ public class Instructor {
 
     // Convenience methods for bi-directional relationship
     public void addCourse(Course course) {
+
         if (courses == null) {
             courses = new ArrayList<>();
         }
@@ -106,10 +110,14 @@ public class Instructor {
         course.setInstructor(this);
     }
 
-    public void removeCourse(Course course){
+    public boolean removeCourse(Course course){
+
         if(courses != null){
-            courses.remove(course);
+            if(courses.remove(course)){
+                course.setInstructor(null);
+                return true;
+            }
         }
-        course.setInstructor(null);
+        return false;
     }
 }
