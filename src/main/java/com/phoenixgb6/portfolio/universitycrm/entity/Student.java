@@ -1,9 +1,12 @@
 package com.phoenixgb6.portfolio.universitycrm.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -100,14 +103,20 @@ public class Student {
         this.courses = courses;
     }
 
-    public void dropCourse(Course tempCourse){
+    public boolean dropCourse(Course course){
 
         if(courses != null){
-            courses.remove(tempCourse);
+            if(courses.remove(course)){
+                return true;
+            }
         }
+        return false;
     }
 
     public void addCourse(Course course){
+        if(courses == null){
+            courses = new ArrayList<>();
+        }
         courses.add(course);
     }
 }

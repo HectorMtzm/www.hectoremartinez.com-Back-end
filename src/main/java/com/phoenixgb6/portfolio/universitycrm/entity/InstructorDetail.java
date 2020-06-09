@@ -1,5 +1,7 @@
 package com.phoenixgb6.portfolio.universitycrm.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;

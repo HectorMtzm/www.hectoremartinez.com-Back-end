@@ -36,7 +36,7 @@ public class Course {
     @JoinColumn(name="instructor_id")
     private Instructor instructor;
 
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name="course_id")
     private List<Review> reviews;
 
@@ -46,8 +46,7 @@ public class Course {
     @JoinTable(
             name="course_student",
             joinColumns=@JoinColumn(name="course_id"),
-            inverseJoinColumns=@JoinColumn(name="student_id")
-    )
+            inverseJoinColumns=@JoinColumn(name="student_id"))
     private List<Student> students;
 
     public Course() {
@@ -134,8 +133,14 @@ public class Course {
         students.add(theStudent);
     }
 
-    public void removeStudent(Student student) {
-         students.remove(student);
+    public boolean removeStudent(Student student) {
+
+        if(students != null){
+            if(students.remove(student)){
+                return true;
+            }
+        }
+        return false;
     }
 
     // Convenience method
