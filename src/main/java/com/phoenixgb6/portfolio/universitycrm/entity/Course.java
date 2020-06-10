@@ -15,21 +15,21 @@ public class Course {
     @Column(name="id")
     private int id;
 
-    @NotBlank(message = "{title.blank}")
-    @Column(name="title")
-    private String title;
-
     @NotBlank(message = "{prefix.blank}")
     @Column(name="prefix")
     private String prefix;
 
-    @NotBlank(message = "{description.blank}")
-    @Column(name ="description")
-    private String description;
-
     @Pattern(regexp = "^[0-9]{4}", message = "{number.invalid}")
     @Column(name ="number")
     private String number;
+
+    @NotBlank(message = "{title.blank}")
+    @Column(name="title")
+    private String title;
+
+    @NotBlank(message = "{description.blank}")
+    @Column(name ="description")
+    private String description;
 
     @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
@@ -53,10 +53,10 @@ public class Course {
     }
 
     public Course(String title, String prefix, String description, String number) {
-        this.title = title;
         this.prefix = prefix;
-        this.description = description;
         this.number = number;
+        this.title = title;
+        this.description = description;
     }
 
     public int getId() {

@@ -15,9 +15,9 @@
         <div class="container">
             <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
             <ul>
-                <li><a th:classappend="${type} == 's' ? 'current'" th:href="@{/portfolio/universitycrm/students/list}">Students</a></li>
-                <li><a th:classappend="${type} == 'i' ? 'current'" th:href="@{/portfolio/universitycrm/instructors/list}">Instructors</a></li>
-                <li><a th:classappend="${type} == 'c' ? 'current'" th:href="@{/portfolio/universitycrm/courses/list}">Courses</a></li>
+                <li><a th:classappend="${type} == 's' ? 'current'" th:href="@{/portfolio/universitycrm/students/}">Students</a></li>
+                <li><a th:classappend="${type} == 'i' ? 'current'" th:href="@{/portfolio/universitycrm/instructors/}">Instructors</a></li>
+                <li><a th:classappend="${type} == 'c' ? 'current'" th:href="@{/portfolio/universitycrm/courses/}">Courses</a></li>
             </ul>
         </div>
     </nav>
@@ -30,9 +30,9 @@
     <i th:if="${errorCode} == 400" class="far fa-times-circle fa-10x"></i>
 
     <div>
-        <a class="btn btn-primary" th:if="${type} == 's'" th:href="@{/portfolio/universitycrm/students/list}"><i class="fas fa-chevron-left"></i>&nbsp; Students List</a>
-        <a class="btn btn-primary" th:if="${type} == 'i'" th:href="@{/portfolio/universitycrm/instructors/list}"><i class="fas fa-chevron-left"></i>&nbsp; Instructors List</a>
-        <a class="btn btn-primary" th:if="${type} == 'c'" th:href="@{/portfolio/universitycrm/courses/list}"><i class="fas fa-chevron-left"></i>&nbsp; Courses List</a>
+        <a class="btn btn-primary" th:if="${type} == 's'" th:href="@{/portfolio/universitycrm/students/}"><i class="fas fa-chevron-left"></i>&nbsp; Students List</a>
+        <a class="btn btn-primary" th:if="${type} == 'i'" th:href="@{/portfolio/universitycrm/instructors/}"><i class="fas fa-chevron-left"></i>&nbsp; Instructors List</a>
+        <a class="btn btn-primary" th:if="${type} == 'c'" th:href="@{/portfolio/universitycrm/courses/}"><i class="fas fa-chevron-left"></i>&nbsp; Courses List</a>
     </div>
 </div>
 </body>

@@ -15,13 +15,13 @@ public class InstructorDetail {
     @Column(name = "id")
     private int id;
 
-    @NotBlank(message = "{office.blank}")
-    @Column(name = "office")
-    private String office;
-
     @Pattern(regexp = "^[2-9][0-9]{9}", message = "{phoneNumber.invalid}")
     @Column(name = "office_phone_number")
     private String phoneNumber;
+
+    @NotBlank(message = "{office.blank}")
+    @Column(name = "office")
+    private String office;
 
     @Column(name = "youtube_channel")
     private String youtubeChannel;
@@ -39,8 +39,8 @@ public class InstructorDetail {
 
     public InstructorDetail(String office, String phoneNumber, String youtubeChannel,
                             String profilePic, Instructor instructor) {
-        this.office = office;
         this.phoneNumber = phoneNumber;
+        this.office = office;
         this.youtubeChannel = youtubeChannel;
         this.profilePic = profilePic;
         this.instructor = instructor;

@@ -27,7 +27,7 @@ public class StudentController {
         this.courseService = courseService;
     }
 
-    @GetMapping("/list")
+    @GetMapping({"/"})
     public String studentsList(Model model,
                                @RequestParam(name = "page", required = false, defaultValue = "1") int pageNumber,
                                @RequestParam(name = "paSi", required = false, defaultValue = "15") int pageSize,
@@ -100,7 +100,7 @@ public class StudentController {
             studentService.save(student);
 
             // use a redirect to prevent duplicate submissions
-            return "redirect:/portfolio/universitycrm/students/list";
+            return "redirect:/portfolio/universitycrm/students/";
         }
     }
 
@@ -116,8 +116,8 @@ public class StudentController {
             throw new NotFoundException("Student not found - ID: " + id, model);
         }
 
-        // redirect to /students/list
-        return "redirect:/portfolio/universitycrm/students/list";
+        // redirect to /students/
+        return "redirect:/portfolio/universitycrm/students/";
 
     }
 

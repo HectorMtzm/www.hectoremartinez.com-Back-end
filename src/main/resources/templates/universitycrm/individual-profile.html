@@ -19,16 +19,16 @@
             <div class="container">
                 <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
                 <ul>
-                    <li><a th:classappend="${!staff} ? 'current'" th:href="@{/portfolio/universitycrm/students/list}">Students</a></li>
-                    <li><a th:classappend="${staff} ? 'current'" th:href="@{/portfolio/universitycrm/instructors/list}">Instructors</a></li>
-                    <li><a th:href="@{/portfolio/universitycrm/courses/list}">Courses</a></li>
+                    <li><a th:classappend="${!staff} ? 'current'" th:href="@{/portfolio/universitycrm/students/}">Students</a></li>
+                    <li><a th:classappend="${staff} ? 'current'" th:href="@{/portfolio/universitycrm/instructors/}">Instructors</a></li>
+                    <li><a th:href="@{/portfolio/universitycrm/courses/}">Courses</a></li>
                 </ul>
             </div>
         </nav>
     </header>
     <main>
         <div class="container">
-            <a class="btn btn-primary" th:href="${staff} ? @{/portfolio/universitycrm/instructors/list} : @{/portfolio/universitycrm/students/list}"><i class="fas fa-chevron-left"></i> <span th:text="${staff} ? 'Instructors List' : 'Students List'"/></a>
+            <a class="btn btn-primary" th:href="${staff} ? @{/portfolio/universitycrm/instructors/} : @{/portfolio/universitycrm/students/}"><i class="fas fa-chevron-left"></i> <span th:text="${staff} ? 'Instructors List' : 'Students List'"/></a>
             <div class="profile">
                 <div class="userInfo">
                     <div class="basicInfo">

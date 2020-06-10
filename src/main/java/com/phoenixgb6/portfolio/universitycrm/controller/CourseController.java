@@ -33,7 +33,7 @@ public class CourseController {
         this.reviewService = reviewService;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public String coursesList(Model model,
                               @RequestParam(name = "page", required = false, defaultValue = "1") int pageNumber,
                               @RequestParam(name = "paSi", required = false, defaultValue = "15") int pageSize,
@@ -116,7 +116,7 @@ public class CourseController {
             courseService.save(course);
 
             // use a redirect to prevent duplicate submissions
-            return "redirect:/portfolio/universitycrm/courses/list";
+            return "redirect:/portfolio/universitycrm/courses/";
         }
     }
 
@@ -133,7 +133,7 @@ public class CourseController {
             throw new NotFoundException("Course ID not found  -  " + id, model);
         }
 
-        // redirect to /courses/list
+        // redirect to /courses/
         return "redirect:/portfolio/universitycrm/courses/list";
     }
 
