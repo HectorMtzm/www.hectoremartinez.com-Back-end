@@ -5,12 +5,10 @@ import com.phoenixgb6.portfolio.universitycrm.entity.Instructor;
 import com.phoenixgb6.portfolio.universitycrm_rest.dao.CourseRepository;
 import com.phoenixgb6.portfolio.universitycrm_rest.dao.InstructorRepository;
 import com.phoenixgb6.portfolio.universitycrm_rest.exception.NotFoundExceptionRest;
-import com.phoenixgb6.portfolio.universitycrm_rest.exception.ErrorResponse;
 import com.phoenixgb6.portfolio.universitycrm_rest.utilityentity.idObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

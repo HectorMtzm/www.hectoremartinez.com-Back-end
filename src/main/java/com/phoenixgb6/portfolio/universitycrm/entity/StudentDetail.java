@@ -19,14 +19,6 @@ public class StudentDetail {
     @Column(name = "id")
     private int id;
 
-    @NotBlank(message = "{state.blank}")
-    @Column(name = "state")
-    private String state;
-
-    @NotBlank(message = "{city.blank}")
-    @Column(name = "city")
-    private String city;
-
     @Pattern(regexp = "^[2-9][0-9]{9}", message = "{phoneNumber.invalid}")
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -41,12 +33,20 @@ public class StudentDetail {
     @Column(name = "major")
     private String major;
 
-    @Column(name = "profile_pic")
-    private String profilePic;
-
     @NotBlank(message = "{address.blank}")
     @Column(name = "address")
     private String address;
+
+    @NotBlank(message = "{city.blank}")
+    @Column(name = "city")
+    private String city;
+
+    @NotBlank(message = "{state.blank}")
+    @Column(name = "state")
+    private String state;
+
+    @Column(name = "profile_pic")
+    private String profilePic;
 
     @OneToOne(mappedBy= "details",
             cascade={CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,

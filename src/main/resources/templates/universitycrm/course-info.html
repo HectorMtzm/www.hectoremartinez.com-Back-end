@@ -19,9 +19,9 @@
         <div class="container">
             <h1 class="logo"><span class="primary-color">U</span>-CRM</h1>
             <ul>
-                <li><a th:href="@{/portfolio/universitycrm/students/list}">Students</a></li>
-                <li><a th:href="@{/portfolio/universitycrm/instructors/list}">Instructors</a></li>
-                <li><a class="current" th:href="@{/portfolio/universitycrm/courses/list}">Courses</a></li>
+                <li><a th:href="@{/portfolio/universitycrm/students/}">Students</a></li>
+                <li><a th:href="@{/portfolio/universitycrm/instructors/}">Instructors</a></li>
+                <li><a class="current" th:href="@{/portfolio/universitycrm/courses/}">Courses</a></li>
             </ul>
         </div>
     </nav>
@@ -29,7 +29,7 @@
 
 <main>
     <div class="small-container">
-        <a class="btn btn-primary" th:href="@{/portfolio/universitycrm/courses/list}"><i class="fas fa-chevron-left"></i> Courses List</a>
+        <a class="btn btn-primary" th:href="@{/portfolio/universitycrm/courses/}"><i class="fas fa-chevron-left"></i> Courses List</a>
 
         <h1 th:text="${course.prefix + ' ' + course.number + ' - ' + course.title}"></h1>
         <div class="tabs-nav">

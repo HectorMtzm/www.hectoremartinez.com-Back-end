@@ -27,7 +27,7 @@ public class InstructorController {
         this.courseService = courseService;
     }
 
-    @GetMapping("/list")
+    @GetMapping("/")
     public String instructorsList(Model model,
                                   @RequestParam(name = "page", required = false, defaultValue = "1") int pageNumber,
                                   @RequestParam(name = "paSi", required = false, defaultValue = "15") int pageSize,
@@ -97,7 +97,7 @@ public class InstructorController {
             instructorService.save(instructor);
 
             // use a redirect to prevent duplicate submissions
-            return "redirect:/portfolio/universitycrm/instructors/list";
+            return "redirect:/portfolio/universitycrm/instructors/";
         }
     }
 
@@ -119,8 +119,8 @@ public class InstructorController {
         // delete the instructor
         instructorService.deleteById(id);
 
-        // redirect to /instructors/list
-        return "redirect:/portfolio/universitycrm/instructors/list";
+        // redirect to /instructors/
+        return "redirect:/portfolio/universitycrm/instructors/";
 
     }
 
