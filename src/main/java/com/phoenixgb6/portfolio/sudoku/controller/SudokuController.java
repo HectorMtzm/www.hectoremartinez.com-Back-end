@@ -16,13 +16,13 @@ import java.net.BindException;
 @RequestMapping("/portfolio/sudoku")
 public class SudokuController {
 
-    @GetMapping("/")
+    @GetMapping
     public String home(Model model) {
         model.addAttribute(new SudokuBoard());
         return "sudoku/home";
     }
 
-    @PostMapping("/")
+    @PostMapping
     public String solveSudoku(@ModelAttribute("sudokuBoard") SudokuBoard sudokuBoard, Model model){
 
         // sets the letters and special characters to 0 to avoid an NullPointerException and then validates the

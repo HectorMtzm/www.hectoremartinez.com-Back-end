@@ -27,7 +27,7 @@ public class StudentController {
         this.courseService = courseService;
     }
 
-    @GetMapping({"/"})
+    @GetMapping
     public String studentsList(Model model,
                                @RequestParam(name = "page", required = false, defaultValue = "1") int pageNumber,
                                @RequestParam(name = "paSi", required = false, defaultValue = "15") int pageSize,

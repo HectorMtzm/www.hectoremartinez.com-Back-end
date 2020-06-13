@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/")
-public class AppController {
+@RequestMapping
+public class PortfolioController {
 
-    @GetMapping("/portfolio")
-    public String portfolio(){
-        return "";
+    @GetMapping("/portfolio/universitycrm")
+    public String universitycrm(){
+        return "portfolio/universitycrm";
     }
 }
