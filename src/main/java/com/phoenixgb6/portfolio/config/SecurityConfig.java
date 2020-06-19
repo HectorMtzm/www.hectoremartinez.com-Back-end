@@ -18,23 +18,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         User.UserBuilder users = User.withDefaultPasswordEncoder();
 
-        auth.inMemoryAuthentication()
-                .withUser(users.username("HectorMtzM6").password("abc123").roles("ADMIN"));
+//        auth.inMemoryAuthentication()
+//                .withUser(users.username("HectorMtzM6").password("abc123").roles("ADMIN"));
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("/portfolio/universitycrm/**").hasRole("ADMIN")
-                .and()
-                .formLogin()
-                .loginProcessingUrl("/authenticateTheUser")
-                .permitAll()
-                .and()
-                .logout().permitAll()
-                .and()
-                .exceptionHandling().accessDeniedPage("/");
+                .antMatchers("/**").permitAll();
+
+//        http.authorizeRequests()
+//                .antMatchers("/portfolio/universitycrm/**").hasRole("ADMIN")
+//                .and()
+//                .formLogin()
+//                .loginProcessingUrl("/authenticateTheUser")
+//                .permitAll()
+//                .and()
+//                .logout().permitAll()
+//                .and()
+//                .exceptionHandling().accessDeniedPage("/");
     }
 
 }

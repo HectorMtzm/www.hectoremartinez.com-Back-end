@@ -12,6 +12,8 @@ html {
   line-height: 1.6;
 }
 
+
+
 /* --------------------Utilities-------------------- */
 a {
   text-decoration: none;
@@ -70,11 +72,17 @@ a {
   width: 2.5rem;
   text-align: center;
   border: solid 0.5px #e2e2e2;
+  caret-color: transparent;
 }
 
 .sudoku input:focus {
   background-color: #cdffd8;
   color: black;
+}
+
+.sudoku input::selection{
+  background-color: #cdffd8;
+  color: #000;
 }
 
 .sudoku .top-box-borders {
@@ -114,8 +122,4 @@ a {
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
-}
-
-.puzzle-grid input{
-  caret-color: transparent;
 }

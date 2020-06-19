@@ -3,16 +3,16 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Sudoku Solver</title>
-    <link th:href="@{/sudoku/css/sudoku.css}" rel="stylesheet" />
+    <link th:href="@{/sudoku/css/sudoku.css}" rel="stylesheet"/>
     <script th:src="@{/sudoku/js/sudokuUtilities.js}"></script>
+    <title>Sudoku Solver</title>
 </head>
 
 <body>
     <div class="sudoku" id="sudoku">
         <h1>Sudoku Solver</h1>
         <div th:switch="${invalid}">
-            <p th:case="'1'" class="invalid">This board is impossible to solve!</p>
+            <p th:case="'1'" class="invalid">This board is impossible to solve.</p>
             <p th:case="'2'" class="invalid">Invalid board. </p>
         </div>
         <form action="#" th:action="@{/portfolio/sudoku/}" th:object="${sudokuBoard}" autocomplete="off" method="post">
@@ -120,8 +120,8 @@
                 </tbody>
             </table>
             <div class="buttons">
-                <button class="btn btn-primary" onclick="validateAddTextField()" type="submit">Solve!</button>
-                <button class="btn btn-negative" onclick="clearBoard();return false;">Reset</button>
+                <button class="btn btn-primary" onclick="validate()" type="submit">Solve</button>
+                <button class="btn btn-negative" onclick="clearBoard(); return false;">Reset</button>
             </div>
         </form>
     </div>
