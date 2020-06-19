@@ -1,21 +1,27 @@
-function getKey(e){
-    let key_code=e.keyCode;
-    switch(key_code){
-        case 37: //left arrow key
-            moveLeft();
-            break;
-        case 38: //Up arrow key
-            moveUp();
-            break;
-        case 39: //right arrow key
-            moveRight();
-            break;
-        case 40: //down arrow key
-            moveDown();
-            break;
-        default:
-            document.activeElement.value=e.key;
+document.onkeydown = function (e){
+    const key_code=e.key;
+
+    if(key_code == "ArrowLeft")
+        moveLeft();
+    else if(key_code == "ArrowUp")
+        moveUp();
+    else if(key_code == "ArrowRight")
+        moveRight();
+    else if(key_code == "ArrowDown")
+        moveDown();
+    else if(/[1-9]/.test(key_code)){
+        updateBoardp1();
+        document.activeElement.value = e.key;
+        updateBoardp2();
     }
+    else if(key_code == "Backspace") {
+        updateBoardp1();
+        document.activeElement.value = "";
+    }
+    else if(key_code == "Tab"){
+    }
+    else
+        e.preventDefault();
 }
 
 function moveLeft(){
@@ -80,19 +86,156 @@ function moveDown(){
 
     document.getElementById(position.toString()).focus();
 }
+function updateBoardp1() {
 
-function clearBoard() {
-    for(let i = 0; i < 81; i++){
-        document.getElementById(i).value="";
+    var itemsIdH = new Array();
+    var itemsIdV = new Array();
+    var itemsIdSquare = new Array();
+
+    const elementId = document.activeElement.id;
+    const elementValue = document.activeElement.value;
+    const boxStart = findSquareStart(elementId);
+    const elementMaxIdValueH = elementId - (elementId % 9) + 9;
+    const elementMinIdValueV = minValue();
+    function minValue() {
+        let minValue = elementId;
+        while(minValue > 8){
+            minValue -= 9;
+        }
+        return minValue;
     }
-}
 
-function validate(){
-    for(var i = 0; i <81; i++){
-        if(/[^0-9]/.test(parseInt(document.getElementById(i).value))){
-            document.getElementById(i).value="";
+    for (let i = elementMaxIdValueH - 9; i < elementMaxIdValueH; i++) {
+        if (document.getElementById(i).value == elementValue) {
+            itemsIdH.push(document.getElementById(i).id);
+        }
+    }
+
+    for (let j = elementMinIdValueV; j < 81; j+=9) {
+        if (document.getElementById(j).value == elementValue) {
+            itemsIdV.push(document.getElementById(j).id);
+        }
+    }
+
+    for (let z = boxStart; z < boxStart + 3; z++) {
+        if (document.getElementById(z).value == elementValue) {
+            itemsIdSquare.push(document.getElementById(z).id);
+        }
+    }
+    for (let z = (boxStart + 9); z < boxStart + 12; z++) {
+        if (document.getElementById(z).value == elementValue) {
+            itemsIdSquare.push(document.getElementById(z).id);
+        }
+    }
+    for (let z = (boxStart + 18); z < boxStart + 21; z++) {
+        if (document.getElementById(z).value == elementValue) {
+            itemsIdSquare.push(document.getElementById(z).id);
+        }
+    }
+
+    if(elementValue != ""){
+        if(itemsIdH.length == 2){
+            itemsIdH.forEach(id => document.getElementById(id).style.color = null);
+        }
+        else {
+            document.getElementById(elementId).style.color = null;
+        }
+
+        if(itemsIdV.length == 2){
+            itemsIdV.forEach(id => document.getElementById(id).style.color = null);
+        }
+        else {
+            document.getElementById(elementId).style.color = null;
+        }
+
+        if(itemsIdSquare.length == 2){
+            itemsIdSquare.forEach(id => document.getElementById(id).style.color = null);
+        }
+        else {
+            document.getElementById(elementId).style.color = null;
         }
     }
 }
 
-document.onkeydown = getKey;
+function updateBoardp2() {
+
+    var itemsId = new Array();
+
+    const elementId = document.activeElement.id;
+    const elementValue = document.activeElement.value;
+    const boxStart = findSquareStart(elementId);
+    const elementMaxIdValueH = elementId - (elementId % 9) + 9;
+    const elementMinIdValueV = minValue();
+    function minValue() {
+        let minValue = elementId;
+        while(minValue > 8){
+            minValue -= 9;
+        }
+        return minValue;
+    }
+
+    //checks if the horizontal line is valid with the new number
+    for (let i = elementMaxIdValueH - 9; i < elementMaxIdValueH; i++) {
+        if (document.getElementById(i).value == elementValue) {
+            itemsId.push(document.getElementById(i).id);
+        }
+    }
+    if(itemsId.length > 1){
+        itemsId.forEach(id => document.getElementById(id).style.color = "red");
+    }
+
+    itemsId = new Array();
+
+    //Checks vertical line is valid with the new number
+    for (let j = elementMinIdValueV; j < 81; j+=9) {
+        if (document.getElementById(j).value == elementValue) {
+            itemsId.push(document.getElementById(j).id);
+        }
+    }
+    if(itemsId.length > 1){
+        itemsId.forEach(id => document.getElementById(id).style.color = "red");
+    }
+
+    itemsId = new Array();
+
+    //Checks if the square section is valid with the new number
+    for (let z = boxStart; z < boxStart + 3; z++) {
+        if (document.getElementById(z).value == elementValue) {
+            itemsId.push(document.getElementById(z).id);
+        }
+    }
+    for (let z = (boxStart + 9); z < boxStart + 12; z++) {
+        if (document.getElementById(z).value == elementValue) {
+            itemsId.push(document.getElementById(z).id);
+        }
+    }
+    for (let z = (boxStart + 18); z < boxStart + 21; z++) {
+        if (document.getElementById(z).value == elementValue) {
+            itemsId.push(document.getElementById(z).id);
+        }
+    }
+    if(itemsId.length > 1){
+        itemsId.forEach(id => document.getElementById(id).style.color = "red");
+    }
+
+}
+
+function clearBoard() {
+    for(let i = 0; i < 81; i++){
+        document.getElementById(i).value="";
+        document.getElementById(i).style.color = null;
+    }
+}
+
+function findSquareStart(elementId) {
+    let BoxLeftBorder = elementId - (elementId % 3);
+    return BoxLeftBorder - ((Math.floor(BoxLeftBorder / 9) % 3) * 9);
+}
+
+function validate() {
+    for (let i = 0; i < 81; i++) {
+        if (/[^0-9]/.test(parseInt(document.getElementById(i).value))) {
+            document.getElementById(i).value = "";
+        }
+    }
+}

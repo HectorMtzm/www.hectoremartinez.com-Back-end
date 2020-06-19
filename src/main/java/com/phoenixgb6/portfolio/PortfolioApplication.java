@@ -30,6 +30,7 @@ public class PortfolioApplication {
 	public LocalValidatorFactoryBean getValidator() {
 		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
 		bean.setValidationMessageSource(messageSource());
+
 		return bean;
 	}
 
