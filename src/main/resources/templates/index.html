@@ -1,1 +1,88 @@
-<meta http-equiv="refresh" content="0; url=/portfolio/">
+<!--<meta http-equiv="refresh" content="0; url=/portfolio/">-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Software engineer specialized in Full Stack Java Development.">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="Software engineer, Java fullstack, fullstack, Spring, Spring boot">
+    <link rel="stylesheet" th:href="@{/portfolio/css/style.css}">
+    <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700;900&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+    <title>Hector Martinez</title>
+</head>
+<body>
+<div class="navigation">
+    <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
+
+    <label for="navi-toggle" class="navigation__button">
+        <span class="navigation__icon">&nbsp;</span>
+    </label>
+
+    <div class="navigation__background"></div>
+
+    <nav class="navigation__nav">
+        <ul class="navigation__list">
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com" class="navigation__link">Home</a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/resume" class="navigation__link">Resume <i class="fas fa-cloud-download-alt"></i></a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/portfolio" class="navigation__link">Portfolio</a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/contact" class="navigation__link">Contact</a></li>
+        </ul>
+    </nav>
+</div>
+
+<div class="work-in-progress">This webapp is a work in progress</div>
+<header class="header">
+    <h1 class="header__title">Hector Martinez</h1>
+    <p class="header__paragraph">I am a <span class="glitch-wrapper"><span class="text-glitch">Software</span></span> Engineer</p>
+    <a href="/contact" class="header__button btn btn--primary margin-top-5">Contact me &nbsp;<i class="far fa-envelope"></i></a>
+</header>
+
+<main>
+    <section class="section-about">
+        <div class="container">
+            <div class="center-h">
+                <h2 class="heading-primary margin-bottom-3">About Me</h2>
+                <p class="paragraph margin-bottom-2">I recently graduated from the university and I am looking for the perfect opportunity to start my career as a Full Stack Java Developer</p>
+            </div>
+
+            <div class="presentation">
+                <div class="presentation__figure">
+                    <div class="presentation__shape">
+                        <img th:src="@{portfolio/img/about.jpg}" alt="picture" class="presentation__image">
+                    </div>
+                    <div class="presentation__description">
+                        <h2 class="heading-secondary">Hi, my name is Hector</h2>
+                        <p>I am passionate about technology and I love to learn all I can about it. I consider myself a fast learner and a good problem solver. When I have free time, I spend most of it learning new technologies that interests me and will help me professionally.</p>
+                        <p>As a Mexican receiving an education in United States, my communication skills are more than adequate to communicate in Spanish and English.</p>
+                    </div>
+                </div>
+                <div class="presentation__hobbies">
+                    <h2 class="heading-secondary">Other interests</h2>
+                    <ul class="presentation__hobbies-list">
+                        <li>Puzzle solving</li>
+                        <li>Competitive videogames</li>
+                        <li>PC building</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- <section class="section-skills">
+        <div class="container">
+            <div class="center-h">
+                <h2 class="heading-primary margin-bottom-3">Skills</h2>
+                <p class="paragraph margin-bottom-2">I recently graduated from the university and I am looking for the perfect opportunity to start my career as a Full Stack Java Developer</p>
+            </div>
+        </div>
+    </section> -->
+</main>
+
+</body>
+</html>
+

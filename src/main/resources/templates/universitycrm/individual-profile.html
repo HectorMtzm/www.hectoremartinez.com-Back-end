@@ -119,7 +119,7 @@
 
     <div th:if="${!staff}" id="addCourse" class="overlay">
         <div class="wrap">
-            <form id="course-form" th:action="@{/portfolio/universitycrm/students/saveCourse}" method="post">
+            <form id="course-form" th:action="@{/portfolio/universitycrm/students/{sid}(sid=${individual.id})} + @{/saveCourse}" method="post">
                 <input type="text" name="sid" th:value="${individual.id}" hidden/>
                 <label>Course ID:</label>
                 <input id="courseIdInput" name="cid" th:value="${cid}" placeholder="ID" autocomplete="off"/>
