@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content=" Contact Hector Martinez, Software engineer specialized in Java fullstack development.">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="Software engineer, Java fullstack, Spring, Spring boot, contact">
+    <link rel="stylesheet" th:href="@{/portfolio/css/style.css}">
+    <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700;900&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@100;300;400;700;900&display=swap"
+            rel="stylesheet">
+
+    <title>Hector Martinez | Contact</title>
+</head>
+
+<body>
+<div class="navigation">
+    <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
+
+    <label for="navi-toggle" class="navigation__button">
+        <span class="navigation__icon">&nbsp;</span>
+    </label>
+
+    <div class="navigation__background"></div>
+
+    <nav class="navigation__nav">
+        <ul class="navigation__list">
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com" class="navigation__link">Home</a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/resume" class="navigation__link">Resume <i class="fas fa-cloud-download-alt"></i></a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/portfolio" class="navigation__link">Portfolio</a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/contact" class="navigation__link">Contact</a></li>
+        </ul>
+    </nav>
+</div>
+
+<main>
+    <section class="section-contact">
+        <div class="container">
+            <div class="center-h">
+                <h1 class="heading-primary">Contact Me</h1>
+                <p>Please feel free to use any of the methods below to contact me.</p>
+            </div>
+            <form action="#" th:action="@{/contact/submit}" method="POST" class="form">
+                <div th:if="${sent}" class="successful">Message sent!</div>
+                <div class="form__group">
+                    <label for="name" class="form__label">Name</label>
+                    <input type="text" name="name" id="name" class="form__input" required>
+                </div>
+                <div class="form__group">
+                    <label for="email" class="form__label">Email</label>
+                    <input type="email" name="email" id="email" class="form__input" required>
+                </div>
+                <div class="form__group">
+                    <label for="message" class="form__label">Message</label>
+                    <textarea type="text" name="message" id="message"
+                              class="form__input form__input--text-area"></textarea>
+                </div>
+                <div class="form__group">
+                    <button class="btn btn--primary " type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <section class="section-contact-info">
+        <div class="container">
+            <div class="box-container">
+                <div class="box-3">
+                    <i class="fas fa-home fa-3x"></i>
+                    <h3>Location</h3>
+                    <p>E Renner Rd, Richardson, TX</p>
+                </div>
+                <div class="box-3 bg-light">
+                    <i class="fas fa-mobile-alt fa-3x"></i>
+                    <h3>Phone Number</h3>
+                    <p>(469) 343-9123</p>
+                </div>
+                <div class="box-3">
+                    <i class="fas fa-envelope fa-3x"></i>
+                    <h3>Email Address</h3>
+                    <p>Hector.mtzm6@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+
+</html>

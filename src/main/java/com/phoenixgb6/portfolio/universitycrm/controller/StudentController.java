@@ -163,10 +163,10 @@ public class StudentController {
         return "redirect:/portfolio/universitycrm/students/" + studentId;
     }
 
-    @PostMapping("{studentId}/saveCourse")
-    public String saveCourse(@PathVariable int studentId, @RequestParam("cid") int courseId, Model model){
+    @PostMapping("{sid}/saveCourse")
+    public String saveCourse(@PathVariable int sid, @RequestParam("cid") int courseId, Model model){
 
-        Student student = studentService.findById(studentId);
+        Student student = studentService.findById(sid);
 
         try{
             student.addCourse(courseService.findById(courseId));
@@ -177,7 +177,7 @@ public class StudentController {
             throw new NotFoundException("Course ID not found - " + courseId, model);
         }
 
-        return "redirect:/portfolio/universitycrm/students/" + studentId;
+        return "redirect:/portfolio/universitycrm/students/" + sid;
     }
 
 }
