@@ -134,7 +134,7 @@ public class CourseController {
         }
 
         // redirect to /courses/
-        return "redirect:/portfolio/universitycrm/courses/list";
+        return "redirect:/portfolio/universitycrm/courses";
     }
 
     @GetMapping("/addForm")
