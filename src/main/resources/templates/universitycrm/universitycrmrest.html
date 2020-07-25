@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content=" Contact Hector Martinez, Software engineer specialized in Java fullstack development.">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="Software engineer, Java fullstack, Spring, Spring boot, contact">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700;900&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@100;300;400;700;900&display=swap"
+            rel="stylesheet">
+
+    <title>Hector Martinez | UniversityCRM REST API</title>
+</head>
+<body>
+<div class="navigation">
+    <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
+
+    <label for="navi-toggle" class="navigation__button">
+        <span class="navigation__icon">&nbsp;</span>
+    </label>
+
+    <div class="navigation__background"></div>
+
+    <nav class="navigation__nav">
+        <ul class="navigation__list">
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com" class="navigation__link">Home</a>
+            </li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/resume"
+                                            class="navigation__link">Resume <i class="fas fa-cloud-download-alt"></i></a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/portfolio"
+                                            class="navigation__link">Portfolio</a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/contact"
+                                            class="navigation__link">Contact</a></li>
+        </ul>
+    </nav>
+</div>
+
+<main>
+    <section class="section-restapi">
+        <div class="container">
+            <div class="center-h">
+                <h2 class="heading-primary">UniversityCRM REST API</h2>
+                <p class="section-description">Here you can find all the endpoints and acceptable HTTP request methods they support</p>
+            </div>
+
+            <div class="api">
+                <div class="api__section api__section--students">
+                    <div class="api__request-block">
+                        <div class="heading-secondary">GET</div>
+                        <div class="api__section-group">
+                            <p>To retrive the students list:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/students</code>
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To retrieve a specific student, use the student ID:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/students/<span class="code-highlight">{id}</span></code>
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To retrieve the classes of a specific student:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/students/<span class="code-highlight">{id}</span>/courses</code>
+                        </div>
+                    </div>
+
+                    <div class="api__request-block">
+                        <div class="heading-secondary">POST</div>
+                        <div class="api__section-group">
+                            <p>To create a new student, use the following endpoint and JSON format in the body:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/students</code>
+                            <pre>
+{
+    "firstName": "Eduardo",
+    "lastName": "Martinez",
+    "email": "hector.mtzm6@gmail.com",
+    "details": {
+        "phoneNumber": "4693439123",
+        "dateOfBirth": "1994-12-30",
+        "major": "Software Engineering",
+        "address": "1125 E Renner Rd",
+        "city": "Richardson",
+        "state": "Texas",
+        "profilePic": "https://i.redd.it/9t77y7vzpan21.jpg"
+    }
+}
+</pre>
+
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To register a student to a class, use the following endpoint and JSON format in the body:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/students/<span class="code-highlight">{id}</span>/courses</code>
+                            <pre>
+{
+    "id": <span class="code-highlight">{Course ID}</span>
+}
+</pre>
+                        </div>
+                    </div>
+
+                    <div class="api__request-block">
+                        <div class="heading-secondary">PUT</div>
+                        <div class="api__section-group">
+                            <p>To update a student information, use the following endpoint and JSON format:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/students/<span class="code-highlight">{id}</span> </code>
+                            <pre>
+{
+    "firstName": "Hector",
+    "lastName": "Martinez",
+    "email": "hector.mtzm6@gmail.com",
+    "details": {
+        "phoneNumber": "4693439123",
+        "dateOfBirth": "1994-12-01",
+        "major": "Software Engineering",
+        "address": "1125 E Renner Rd. Apt. 1243A",
+        "city": "Richardson",
+        "state": "Texas",
+        "profilePic": "https://i.redd.it/9t77y7vzpan21.jpg"
+    }
+}
+</pre>
+                        </div>
+                    </div>
+
+                    <div class="api__request-block">
+                        <div class="heading-secondary">DELETE</div>
+                        <div class="api__section-group">
+                            <p>To delete a specific student:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/students/<span class="code-highlight">{id}</span></code>
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To remove a student from a class use the following endpoint and JSON format:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/students/<span class="code-highlight">{id}</span>/courses</code>
+                            <pre>
+{
+    "id": <span class="code-highlight">{Course ID}</span>
+}
+</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="api__section api__section--instructors">
+                    <div class="api__request-block">
+                        <div class="heading-secondary">GET</div>
+                        <div class="api__section-group">
+                            <p>To retrive the instructors list:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/instructors</code>
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To retrieve a specific instructor, use the instructor ID:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/instructors/<span class="code-highlight">{id}</span></code>
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To retrieve the classes of a specific instructor:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/instructors/<span class="code-highlight">{id}</span>/courses</code>
+                        </div>
+                    </div>
+
+                    <div class="api__request-block">
+                        <div class="heading-secondary">POST</div>
+                        <div class="api__section-group">
+                            <p>To create a new instructor, use the following endpoint and JSON format in the body:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/instructo</code>
+                            <pre>
+{
+    "firstName": "Eduardo",
+    "lastName": "Martinez",
+    "email": "hector.mtzm6@utdallas.edu",
+    "details": {
+        "phoneNumber": "4693439123",
+        "office": "VH.1532",
+        "youtubeChannel": "https://www.youtube.com/channel/gfe56u4eg56uf3",
+        "profilePic": "https://images.unsplash.com/flagged/photo-1559475555-b26777ed3ab4"
+    }
+}
+</pre>
+
+                        </div>
+                    </div>
+
+                    <div class="api__request-block">
+                        <div class="heading-secondary">PUT</div>
+                        <div class="api__section-group">
+                            <p>To update the instructor information, use the following endpoint and JSON format:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/instructors/<span class="code-highlight">{id}</span> </code>
+                            <pre>
+{
+    "firstName": "Hector",
+    "lastName": "Martinez",
+    "email": "hem170430@utdallas.edu",
+    "details": {
+        "phoneNumber": "4693439123",
+        "office": "VH.1532",
+        "youtubeChannel": "https://www.youtube.com/channel/gfe56u4eg56uf3",
+        "profilePic": "https://images.unsplash.com/flagged/photo-1559475555-b26777ed3ab4"
+    }
+}
+</pre>
+                        </div>
+                    </div>
+
+                    <div class="api__request-block">
+                        <div class="heading-secondary">DELETE</div>
+                        <div class="api__section-group">
+                            <p>To delete a specific instructor:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/instructors/<span class="code-highlight">{id}</span></code>
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To remove the instructor from a class use the following endpoint and JSON format:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/instructors/<span class="code-highlight">{id}</span>/courses</code>
+                            <pre>
+{
+    "id": <span class="code-highlight">{Course ID}</span>
+}
+</pre>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="api__section api__section--courses">
+                    <div class="api__request-block">
+                        <div class="heading-secondary">GET</div>
+                        <div class="api__section-group">
+                            <p>To retrive the courses list:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/courses</code>
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To retrieve a specific course, use the course ID:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/courses/<span class="code-highlight">{id}</span></code>
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To retrieve the students enrolled in a specific course:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/courses/<span class="code-highlight">{id}</span>/students</code>
+                        </div>
+                    </div>
+
+                    <div class="api__request-block">
+                        <div class="heading-secondary">POST</div>
+                        <div class="api__section-group">
+                            <p>To create a new course, use the following endpoint and JSON format in the body:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/courses</code>
+                            <pre>
+{
+"prefix": "GOVT",
+"number": "2305",
+"title": "American National Government",
+"description": "Lorem ipsum dolor sit amet."
+}
+</pre>
+
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To assign an instructor to a class, use the following endpoint and JSON format in the body:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/courses/<span class="code-highlight">{id}</span>/instructor</code>
+                            <pre>
+{
+"id": <span class="code-highlight">{Instructor ID}</span>
+}
+</pre>
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To add a student to a course, use the following endpoint and JSON format in the body:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/courses/<span class="code-highlight">{id}</span>/students</code>
+                            <pre>
+{
+"id": <span class="code-highlight">{Student ID}</span>
+}
+</pre>
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To add a review to a course, use the following endpoint and JSON format in the body:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/courses/<span class="code-highlight">{id}</span>/students</code>
+                            <pre>
+{
+"comment": "Lorem ipsum dolor sit amet."
+}
+</pre>
+                        </div>
+                    </div>
+
+                    <div class="api__request-block">
+                        <div class="heading-secondary">PUT</div>
+                        <div class="api__section-group">
+                            <p>To update a course information, use the following endpoint and JSON format:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/courses/<span class="code-highlight">{id}</span> </code>
+                            <pre>
+{
+"prefix": "GOVT",
+"number": "2305",
+"title": "American National Government",
+"description": "Lorem ipsum dolor sit amet."
+}
+</pre>
+                        </div>
+                    </div>
+
+                    <div class="api__request-block">
+                        <div class="heading-secondary">DELETE</div>
+                        <div class="api__section-group">
+                            <p>To remove a specific course:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/courses/<span class="code-highlight">{id}</span></code>
+                        </div>
+
+                        <div class="api__section-group">
+                            <p>To remove a student from a course:</p>
+                            <code>http://www.hectoremartinez.com/portfolio/universitycrm/api/courses/<span class="code-highlight">{id}</span>/students</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+
+</html>
