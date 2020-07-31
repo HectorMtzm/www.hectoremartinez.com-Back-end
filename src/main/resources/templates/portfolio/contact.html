@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="keywords" content="Software engineer, Java fullstack, Spring, Spring boot, contact">
     <link rel="stylesheet" th:href="@{/portfolio/css/style.css}">
+    <script th:src="@{/portfolio/js/js.js}"></script>
     <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
     <link
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700;900&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@100;300;400;700;900&display=swap"
@@ -16,8 +17,7 @@
 
     <title>Hector Martinez | Contact</title>
 </head>
-
-<body>
+<body class="bg-light-2">
 <div class="navigation">
     <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
 
@@ -29,10 +29,14 @@
 
     <nav class="navigation__nav">
         <ul class="navigation__list">
-            <li class="navigation__item"><a href="http://www.hectoremartinez.com" class="navigation__link">Home</a></li>
-            <li class="navigation__item"><a href="http://www.hectoremartinez.com/resume" class="navigation__link">Resume <i class="fas fa-cloud-download-alt"></i></a></li>
-            <li class="navigation__item"><a href="http://www.hectoremartinez.com/portfolio" class="navigation__link">Portfolio</a></li>
-            <li class="navigation__item"><a href="http://www.hectoremartinez.com/contact" class="navigation__link">Contact</a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com" class="navigation__link">Home</a>
+            </li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/resume"
+                                            class="navigation__link">Resume <i class="fas fa-cloud-download-alt"></i></a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/portfolio"
+                                            class="navigation__link">Portfolio</a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/contact"
+                                            class="navigation__link">Contact</a></li>
         </ul>
     </nav>
 </div>
@@ -41,8 +45,8 @@
     <section class="section-contact">
         <div class="container">
             <div class="center-h">
-                <h1 class="heading-primary">Contact Me</h1>
-                <p>Please feel free to use any of the methods below to contact me.</p>
+                <h1 class="heading-primary margin-bottom-3">Contact Me</h1>
+                <p class="section-description">Please feel free to use any of the methods below to contact me.</p>
             </div>
             <form action="#" th:action="@{/contact/submit}" method="POST" class="form">
                 <div th:if="${sent}" class="successful">Message sent!</div>
@@ -70,19 +74,19 @@
         <div class="container">
             <div class="box-container">
                 <div class="box-3">
-                    <i class="fas fa-home fa-3x"></i>
-                    <h3>Location</h3>
-                    <p>E Renner Rd, Richardson, TX</p>
-                </div>
-                <div class="box-3 bg-light">
                     <i class="fas fa-mobile-alt fa-3x"></i>
                     <h3>Phone Number</h3>
                     <p>(469) 343-9123</p>
                 </div>
-                <div class="box-3">
+                <div class="box-3 bg-light">
                     <i class="fas fa-envelope fa-3x"></i>
                     <h3>Email Address</h3>
                     <p>Hector.mtzm6@gmail.com</p>
+                </div>
+                <div class="box-3">
+                    <i class="fas fa-home fa-3x"></i>
+                    <h3>Location</h3>
+                    <p>E Renner Rd, Richardson, TX</p>
                 </div>
             </div>
         </div>
