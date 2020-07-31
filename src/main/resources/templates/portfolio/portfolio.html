@@ -1,11 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+          content=" Contact Hector Martinez, Software engineer specialized in Java fullstack development.">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="Software engineer, Java fullstack, Spring, Spring boot, contact">
+    <link rel="stylesheet" th:href="@{/portfolio/css/style.css}">
+    <script th:src="@{/portfolio/js/js.js}"></script>
+    <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700;900&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+    <title>Hector Martinez | Portfolio</title>
 </head>
-<body>
-<h2><a href="/portfolio/universitycrm/students">UniversityCRM</a></h2>
-<h2><a href="/portfolio/sudoku">Sudoku solver</a></h2>
+<body class="bg-light-2">
+<div class="navigation">
+    <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
+
+    <label for="navi-toggle" class="navigation__button">
+        <span class="navigation__icon">&nbsp;</span>
+    </label>
+
+    <div class="navigation__background"></div>
+
+    <nav class="navigation__nav">
+        <ul class="navigation__list">
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com" class="navigation__link">Home</a>
+            </li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/resume" class="navigation__link">Resume <i class="fas fa-cloud-download-alt"></i></a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/portfolio" class="navigation__link">Portfolio</a></li>
+            <li class="navigation__item"><a href="http://www.hectoremartinez.com/contact" class="navigation__link">Contact</a></li>
+        </ul>
+    </nav>
+</div>
+<main>
+    <section class="section-portfolio">
+        <div class="container">
+            <div class="center-h">
+                <h3 class="heading-primary ">Portfolio</h3>
+                <p class="section-description margin-bottom-3"> </p>
+            </div>
+            <div class="proyects">
+                <div class="card">
+                    <div class="card__side card__side--front">
+                        <div class="card__picture card__picture--1">
+                            &nbsp;
+                        </div>
+                        <h4 class="card__heading">
+                            <span class="card__heading-span card__heading-span--1">University CRM</span>
+                        </h4>
+                        <div class="card__details">
+                            <p>This project simulates a university CRM in which we can manage students, instructors and courses. All CRUD operations are supported, and the data is persisted in an Amazon RDS.</p>
+                        </div>
+                    </div>
+                    <div class="card__side card__side--back card__side--back-1">
+                        <span class="heading-tertiary">Technologies used:</span>
+                        <ul class="card__technologies">
+                            <li class="card__technologies-item category-framework">Spring MVC</li>
+                            <li class="card__technologies-item category-languge">Java</li>
+                            <li class="card__technologies-item category-framework">Hibernate ORM</li>
+                            <li class="card__technologies-item category-languge">JavaScript</li>
+                            <li class="card__technologies-item category-framework">Thymeleaf</li>
+                            <li class="card__technologies-item category-db">MySQL</li>
+                        </ul>
+                        <a class="btn btn--white" href="portfolio/universitycrm">Go to project</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__side card__side--front">
+                        <div class="card__picture card__picture--2">
+                            &nbsp;
+                        </div>
+
+                        <h4 class="card__heading">
+                            <span class="card__heading-span card__heading-span--2">REST API for University CRM </span>
+                        </h4>
+                        <div class="card__details">
+                            <p>This project runs over the University CRM project. It uses the same database to provide a REST API. It supports the same CRUD operations as the University CRM project. </p>
+                        </div>
+                    </div>
+                    <div class="card__side card__side--back card__side--back-2">
+                        <span class="heading-tertiary">Technologies used:</span>
+                        <ul class="card__technologies">
+                            <li class="card__technologies-item category-framework">Spring Data JPA</li>
+                            <li class="card__technologies-item category-languge">Java</li>
+                            <li class="card__technologies-item category-framework">Spring Data REST</li>
+                            <li class="card__technologies-item category-db">MySQL</li>
+                        </ul>
+                        <a class="btn btn--white" href="portfolio/universitycrm/api">Go to project</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__side card__side--front">
+                        <div class="card__picture card__picture--3">
+                            &nbsp;
+                        </div>
+
+                        <h4 class="card__heading">
+                            <span class="card__heading-span card__heading-span--3">Sudoku Solver</span>
+                        </h4>
+                        <div class="card__details">
+                            <p>This Sudoku solver uses backtracking to solve the board. It will detect errors on the board dynamically while the user enters the data.</p>
+                        </div>
+                    </div>
+                    <div class="card__side card__side--back card__side--back-3">
+                        <span class="heading-tertiary">Technologies used:</span>
+                        <ul class="card__technologies">
+                            <li class="card__technologies-item category-framework">Spring MVC</li>
+                            <li class="card__technologies-item category-languge">Java</li>
+                            <li class="card__technologies-item category-languge">JavaScript</li>
+                            <li class="card__technologies-item category-framework">Thymeleaf</li>
+                        </ul>
+                        <span class="heading-tertiary">What I learned:</span>
+                        <a class="btn btn--white" href="/portfolio/sudoku">Go to project</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
 </body>
 </html>

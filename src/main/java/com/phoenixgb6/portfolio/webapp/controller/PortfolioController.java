@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 
 @Controller
 @RequestMapping
@@ -33,35 +28,20 @@ public class PortfolioController {
     @Autowired
     private JavaMailSender emailSender;
 
-    @GetMapping("/resume")
-    public ResponseEntity<Resource> downloadResume() throws IOException {
-
-        HttpHeaders headers = new HttpHeaders();
-        ByteArrayResource resume = null;
-
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=resume.pdf");
-
-        try{
-            InputStream is = new ClassPathResource("static/portfolio/resume.pdf").getInputStream();
-            resume = new ByteArrayResource(is.readAllBytes());
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return ResponseEntity.ok()
-                .headers(headers)
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resume);
-    }
 
     @GetMapping("/portfolio")
     public String portfolio(){
         return "portfolio/portfolio";
     }
 
-    @GetMapping("/portfolio")
+    @GetMapping("/portfolio/universitycrm")
+    public String universitycrm(){
+        return "redirect:/portfolio/universitycrm/students/";
+    }
+
+    @GetMapping("/portfolio/universitycrm/api")
     public String universitycrmrest(){
-        return "portfolio/portfolio";
+        return "portfolio/universitycrmrest";
     }
 
     @GetMapping("/contact")
@@ -85,5 +65,26 @@ public class PortfolioController {
         attributes.addFlashAttribute("sent", true);
 
         return new RedirectView("/contact", true);
+    }
+
+    @GetMapping("/resume")
+    public ResponseEntity<Resource> downloadResume() throws IOException {
+
+        HttpHeaders headers = new HttpHeaders();
+        ByteArrayResource resume = null;
+
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=resume.pdf");
+
+        try{
+            InputStream is = new ClassPathResource("static/portfolio/resume.pdf").getInputStream();
+            resume = new ByteArrayResource(is.readAllBytes());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resume);
     }
 }
