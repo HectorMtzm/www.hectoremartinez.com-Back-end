@@ -36,7 +36,7 @@ public class PortfolioController {
 
     @GetMapping("/portfolio/universitycrm")
     public String universitycrm(){
-        return "redirect:/portfolio/universitycrm/students/";
+        return "redirect:/portfolio/universitycrm/students";
     }
 
     @GetMapping("/portfolio/universitycrm/api")
