@@ -73,7 +73,7 @@ public class PortfolioController {
         HttpHeaders headers = new HttpHeaders();
         ByteArrayResource resume = null;
 
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=resume.pdf");
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=Full-stack-Java-developer__Hector-Martinez__Resume.pdf");
 
         try{
             InputStream is = new ClassPathResource("static/portfolio/resume.pdf").getInputStream();
