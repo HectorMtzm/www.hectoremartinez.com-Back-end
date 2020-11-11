@@ -10,7 +10,9 @@
     <meta name="keywords" content="Software engineer, Java fullstack, Spring, Spring boot, contact">
     <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" th:href="@{/portfolio/css/style.css}">
-    <script th:src="@{/portfolio/js/js.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script th:src="@{/portfolio/js/js.js}" defer></script>
     <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;700;900&family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@100;300;400;700;900&display=swap"
             rel="stylesheet">
@@ -52,7 +54,7 @@
                 <h1 class="heading-primary margin-bottom-3">Contact Me</h1>
                 <p class="section-description">Please feel free to use any of the methods below to contact me.</p>
             </div>
-            <form action="#" th:action="@{/contact/submit}" method="POST" class="form">
+            <form id="form" action="#" th:action="@{/contact/submit}" method="POST" class="form">
                 <div th:if="${sent}" class="successful">Message sent!</div>
                 <div class="form__group">
                     <label for="name" class="form__label">Name</label>
@@ -66,6 +68,9 @@
                     <label for="message" class="form__label">Message</label>
                     <textarea type="text" name="message" id="message"
                               class="form__input form__input--text-area"></textarea>
+                </div>
+                <div class="form__group">
+                    <div class="g-recaptcha" data-sitekey="6Lf1g-EZAAAAAHRkTeR7C0UIGMgV57pLcAU1GdaJ"></div>
                 </div>
                 <div class="form__group">
                     <button class="btn btn--primary " type="submit">Submit</button>
