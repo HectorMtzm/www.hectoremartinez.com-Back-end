@@ -1,4 +1,4 @@
-document.onkeydown = function (e){
+document.onkeydown = e => {
     const key_code=e.key;
 
     if(key_code == "ArrowLeft")
@@ -112,9 +112,11 @@ function updateBoardp1() {
     }
 
     for (let j = elementMinIdValueV; j < 81; j+=9) {
-        if (document.getElementById(j).value == elementValue) {
-            itemsIdV.push(document.getElementById(j).id);
-        }
+        try{
+            if (document.getElementById(j).value == elementValue) {
+                itemsIdV.push(document.getElementById(j).id);
+            }
+        } catch (e) {}
     }
 
     for (let z = boxStart; z < boxStart + 3; z++) {
