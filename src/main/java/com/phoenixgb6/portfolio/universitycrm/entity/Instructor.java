@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +21,12 @@ public class Instructor {
     private int id;
 
     @NotBlank(message = "{firstName.blank}")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "{firstName.invalid}")
     @Column(name = "first_name")
     private String firstName;
 
     @NotBlank(message = "{lastName.blank}")
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "{lastName.invalid}")
     @Column(name = "last_name")
     private String lastName;
 

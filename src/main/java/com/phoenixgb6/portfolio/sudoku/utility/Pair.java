@@ -1,21 +1,19 @@
 package com.phoenixgb6.portfolio.sudoku.utility;
 
-import java.lang.reflect.Constructor;
-
 public class Pair<I> {
-    private final int first;
-    private final int second;
+    private final I first;
+    private final I second;
 
-    public Pair(int first, int second) {
+    public Pair(I first, I second) {
         this.first = first;
         this.second = second;
     }
 
-    public int getX(){
+    public I getX(){
         return first;
     }
 
-    public int getY(){
+    public I getY(){
         return second;
     }
 

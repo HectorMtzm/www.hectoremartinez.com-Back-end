@@ -133,7 +133,7 @@ public class SudokuBoard {
     private void setZero() {
         for (int row = 0; row < board.length; row++) {
             for (int col = 0; col < board[row].length; col++) {
-                if(board[row][col] == null || board[row][col].equals("/^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]*$/"))
+                if(board[row][col] == null || board[row][col].equals("/^[1-9]/"))
                     board[row][col] = 0;
             }
         }

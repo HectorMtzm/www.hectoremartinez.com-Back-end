@@ -8,6 +8,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/normalize.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/universitycrm/css/style.css}">
     <script src="https://kit.fontawesome.com/dc13882508.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" th:src="${staff} ? @{/universitycrm/js/instructor_form.js} : @{/universitycrm/js/student_form.js}" defer></script>
     <title th:text="${staff} ? 'Instructor Form' : 'Student Form'"></title>
 </head>
 

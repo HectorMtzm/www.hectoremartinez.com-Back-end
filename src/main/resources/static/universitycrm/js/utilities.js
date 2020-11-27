@@ -1,4 +1,4 @@
-$('#id').keypress(function (e) {
+$('#id').keypress( (e) => {
     let key = e.keyCode;
     if(key == 13)
         $('#findId')[0].click();
