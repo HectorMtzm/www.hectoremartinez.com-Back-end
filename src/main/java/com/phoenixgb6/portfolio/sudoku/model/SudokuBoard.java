@@ -47,7 +47,7 @@ public class SudokuBoard {
         for (int i = 0; i < boardLength; i++) {
             for (int j = 0; j < boardLength; j++) {
                 if (board[i][j] == 0) {
-                    return new Pair<Integer>(i, j);
+                    return new Pair<>(i, j);
                 }
             }
         }

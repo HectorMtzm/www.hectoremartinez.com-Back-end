@@ -1,19 +1,21 @@
 package com.phoenixgb6.portfolio.sudoku.utility;
 
-public class Pair<I> {
-    private final I first;
-    private final I second;
+//Class used to store coordinates
 
-    public Pair(I first, I second) {
+public class Pair<T> {
+    private final T first;
+    private final T second;
+
+    public Pair(T first, T second) {
         this.first = first;
         this.second = second;
     }
 
-    public I getX(){
+    public T getX(){
         return first;
     }
 
-    public I getY(){
+    public T getY(){
         return second;
     }
 

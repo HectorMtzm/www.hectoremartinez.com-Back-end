@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /portfolio/universitycrm/students/*
+Disallow: /portfolio/universitycrm/instructors/*
+Disallow: /portfolio/universitycrm/courses/*

@@ -19,7 +19,6 @@ public class PortfolioApplication {
 		SpringApplication.run(PortfolioApplication.class, args);
 	}
 
-
 	//Enables the code to read the the values stored in messages.properties
 	@Bean
 	public MessageSource messageSource() {
@@ -30,6 +29,7 @@ public class PortfolioApplication {
 
 		return messageSource;
 	}
+
 	//read variables using {key.value} format.
 	@Bean
 	public LocalValidatorFactoryBean getValidator() {
