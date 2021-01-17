@@ -29,7 +29,6 @@ public class PortfolioApplication {
 
 		return messageSource;
 	}
-
 	//read variables using {key.value} format.
 	@Bean
 	public LocalValidatorFactoryBean getValidator() {
